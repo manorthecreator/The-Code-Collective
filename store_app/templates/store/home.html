@@ -6,42 +6,46 @@
     Velora | Home
 {% endblock %}
 
-
 {% block content %}
+
 
 <!-- ================= HERO SECTION ================= -->
 
-<section class="hero">
+<section class="hero-section">
 
-    <img
-        src="{% static 'store/images/hero.jpg' %}"
-        alt="Velora Fashion Collection"
-        class="hero-image"
-    >
+    <div class="hero">
 
-    <div class="hero-overlay"></div>
+        <img
+            src="{% static 'store_app/images/hero_1.jpg' %}"
+            alt="Velora Fashion Collection"
+            class="hero-image"
+        >
 
-    <div class="hero-content">
+        <div class="hero-overlay"></div>
 
-        <h1>
-            Timeless Elegance,<br>
-            <span>Made for You.</span>
-        </h1>
+        <div class="hero-content">
 
-        <p>
-            Discover curated pieces that blend sophistication,
-            quality and effortless style.
-        </p>
+            <h1>
+                Timeless Elegance,<br>
+                <span>Made for You.</span>
+            </h1>
 
-        <div class="hero-buttons">
+            <p>
+                Discover curated pieces that blend sophistication,
+                quality and effortless style.
+            </p>
 
-            <a href="#" class="btn btn-primary">
-                Shop Now
-            </a>
+            <div class="hero-buttons">
 
-            <a href="#" class="btn btn-outline">
-                Collection
-            </a>
+                <a href="#" class="btn btn-primary">
+                    Shop Now
+                </a>
+
+                <a href="#" class="btn btn-outline">
+                    Collection
+                </a>
+
+            </div>
 
         </div>
 
@@ -52,56 +56,72 @@
 
 <!-- ================= SERVICE FEATURES ================= -->
 
-<section class="services">
+<div class="services-wrap">
 
-    <div class="service-item">
+    <section class="services">
 
-        <div class="service-icon">
-            🚚
+        <div class="service-item">
+
+            <div class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12h24v20H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M27 19h9.5L41 24.5V32h-14v-13z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="13" cy="35" r="3.5" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="33" cy="35" r="3.5" stroke="currentColor" stroke-width="2"/>
+                    <path d="M9.5 35h6.5M29 35h.5M3 17h10M3 22h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div>
+                <h4>FREE DELIVERY</h4>
+                <p>On orders over MUR 2,500</p>
+            </div>
+
         </div>
 
-        <div>
-            <h4>FREE DELIVERY</h4>
-            <p>On orders over MUR 2,500</p>
+
+        <div class="service-divider"></div>
+
+
+        <div class="service-item">
+
+            <div class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 4l16 6v11c0 11-7 18.5-16 23-9-4.5-16-12-16-23V10l16-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M17 24l5 5 10-11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <div>
+                <h4>SECURE PAYMENT</h4>
+                <p>100% secure transactions</p>
+            </div>
+
         </div>
 
-    </div>
+
+        <div class="service-divider"></div>
 
 
-    <div class="service-divider"></div>
+        <div class="service-item">
 
+            <div class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M40 24a16 16 0 1 1-5-11.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M40 6v9h-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
 
-    <div class="service-item">
+            <div>
+                <h4>EASY RETURNS</h4>
+                <p>30-day return policy</p>
+            </div>
 
-        <div class="service-icon">
-            ♢
         </div>
 
-        <div>
-            <h4>SECURE PAYMENT</h4>
-            <p>100% secure transactions</p>
-        </div>
+    </section>
 
-    </div>
-
-
-    <div class="service-divider"></div>
-
-
-    <div class="service-item">
-
-        <div class="service-icon">
-            ⟳
-        </div>
-
-        <div>
-            <h4>EASY RETURNS</h4>
-            <p>30-day return policy</p>
-        </div>
-
-    </div>
-
-</section>
+</div>
 
 
 <!-- ================= CATEGORY SECTION ================= -->
@@ -126,7 +146,7 @@
         <div class="category-card">
 
             <img
-                src="{% static 'store/images/women.jpg' %}"
+                src="{% static 'store_app/images/women.jpg' %}"
                 alt="Women's fashion"
             >
 
@@ -150,7 +170,7 @@
         <div class="category-card">
 
             <img
-                src="{% static 'store/images/men.jpg' %}"
+                src="{% static 'store_app/images/men.jpg' %}"
                 alt="Men's fashion"
             >
 
@@ -174,7 +194,7 @@
         <div class="category-card">
 
             <img
-                src="{% static 'store/images/accessories.jpg' %}"
+                src="{% static 'store_app/images/accessories.jpg' %}"
                 alt="Fashion accessories"
             >
 
@@ -205,6 +225,12 @@
 
         <h2>NEW ARRIVALS</h2>
 
+        <button class="products-next" aria-label="Next products">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+
     </div>
 
 
@@ -216,16 +242,16 @@
 
             <div class="product-image">
 
-                <span class="new-badge">
-                    NEW
-                </span>
+                <span class="new-badge">NEW</span>
 
-                <button class="wishlist">
-                    ♡
+                <button class="wishlist" aria-label="Add to wishlist">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 20s-7-4.3-9.5-9C.8 7.2 2.6 3.8 6 3.4c2-.2 3.7.8 4.6 2.4L12 7.2l1.4-1.4c.9-1.6 2.6-2.6 4.6-2.4 3.4.4 5.2 3.8 3.5 7.6-2.5 4.7-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
                 </button>
 
                 <img
-                    src="{% static 'store/images/product1.jpg' %}"
+                    src="{% static 'store_app/images/product1.jpg' %}"
                     alt="Striped sweater"
                 >
 
@@ -240,16 +266,16 @@
 
             <div class="product-image">
 
-                <span class="new-badge">
-                    NEW
-                </span>
+                <span class="new-badge">NEW</span>
 
-                <button class="wishlist">
-                    ♡
+                <button class="wishlist" aria-label="Add to wishlist">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 20s-7-4.3-9.5-9C.8 7.2 2.6 3.8 6 3.4c2-.2 3.7.8 4.6 2.4L12 7.2l1.4-1.4c.9-1.6 2.6-2.6 4.6-2.4 3.4.4 5.2 3.8 3.5 7.6-2.5 4.7-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
                 </button>
 
                 <img
-                    src="{% static 'store/images/product2.jpg' %}"
+                    src="{% static 'store_app/images/product2.jpg' %}"
                     alt="White shirt"
                 >
 
@@ -264,16 +290,16 @@
 
             <div class="product-image">
 
-                <span class="new-badge">
-                    NEW
-                </span>
+                <span class="new-badge">NEW</span>
 
-                <button class="wishlist">
-                    ♡
+                <button class="wishlist" aria-label="Add to wishlist">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 20s-7-4.3-9.5-9C.8 7.2 2.6 3.8 6 3.4c2-.2 3.7.8 4.6 2.4L12 7.2l1.4-1.4c.9-1.6 2.6-2.6 4.6-2.4 3.4.4 5.2 3.8 3.5 7.6-2.5 4.7-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
                 </button>
 
                 <img
-                    src="{% static 'store/images/product3.jpg' %}"
+                    src="{% static 'store_app/images/product3.jpg' %}"
                     alt="New arrival cap"
                 >
 
@@ -288,16 +314,16 @@
 
             <div class="product-image">
 
-                <span class="new-badge">
-                    NEW
-                </span>
+                <span class="new-badge">NEW</span>
 
-                <button class="wishlist">
-                    ♡
+                <button class="wishlist" aria-label="Add to wishlist">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 20s-7-4.3-9.5-9C.8 7.2 2.6 3.8 6 3.4c2-.2 3.7.8 4.6 2.4L12 7.2l1.4-1.4c.9-1.6 2.6-2.6 4.6-2.4 3.4.4 5.2 3.8 3.5 7.6-2.5 4.7-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
                 </button>
 
                 <img
-                    src="{% static 'store/images/product4.jpg' %}"
+                    src="{% static 'store_app/images/product4.jpg' %}"
                     alt="Luxury handbag"
                 >
 
@@ -306,11 +332,6 @@
         </div>
 
     </div>
-
-
-    <button class="products-next">
-        →
-    </button>
 
 </section>
 
