@@ -1,0 +1,82 @@
+{% extends 'store_app/base.html' %}
+{% load static %}
+
+{% block title %}About us · Velora{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'store_app/css/about.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= ABOUT HERO ================= -->
+<section class="about-hero">
+    <img src="{% static 'store_app/images/hero (2).jpeg' %}" alt="Velora tailored garments on display" class="about-hero-img">
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-text">
+        <span class="about-hero-label">Our Story</span>
+        <p>
+            Velora was created with one simple belief: fashion should feel personal.
+            Weaving together modern style, timeless elegance, and carefully curated
+            pieces to help you express your individuality with confidence.
+        </p>
+    </div>
+</section>
+
+
+<!-- ================= THE VELORA STORY ================= -->
+<section class="story-section">
+
+    <div class="story-text">
+        <h2>The Velora Story</h2>
+        <p>
+            Velora was born from a simple belief: that true luxury lies in thoughtful
+            design, exceptional quality, and timeless style. Found in 2026, our brand
+            emerged from a passion for creating pieces that empower fashion.
+        </p>
+        <p>
+            Every collection is a reflection of our commitment to craftsmanship,
+            conscious choices, and modern elegance designed to be loved today.
+        </p>
+    </div>
+
+    <div class="story-image">
+        <img src="{% static 'store_app/images/hero (1).jpeg' %}" alt="Fabric, scissors and thread on a table">
+    </div>
+
+</section>
+
+
+<!-- ================= OUR VALUES ================= -->
+<section class="values-section">
+
+    <h2 class="values-heading">
+        <span class="rule"></span>
+        Our Values
+        <span class="rule"></span>
+    </h2>
+
+    <div class="values-grid">
+
+        <div class="value-card">
+            <h3>Quality</h3>
+            <p>We source the finest materials and ensure every detail meets the highest standards.</p>
+        </div>
+
+        <div class="value-card">
+            <h3>Craftsmanship</h3>
+            <p>Our pieces are thoughtfully designed and carefully crafted by skilled artisans.</p>
+        </div>
+
+        <div class="value-card">
+            <h3>Sustainability</h3>
+            <p>We are committed to ethical practices and reducing our impact for a better future.</p>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
