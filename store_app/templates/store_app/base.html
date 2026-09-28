@@ -20,12 +20,12 @@
 
         <nav class="navbar">
 
-            <a href="{% url 'store:home' %}" class="nav-logo">Velora</a>
+            <a href="{% url 'store_app:home' %}" class="nav-logo">Velora</a>
 
             <ul class="nav-links">
-                <li><a href="{% url 'store:home' %}">Home</a></li>
+                <li><a href="{% url 'store_app:home' %}">Home</a></li>
                 <li><a href="#">Shop</a></li>
-                <li><a href="{% url 'store:about' %}">About us</a></li>
+                <li><a href="{% url 'store_app:about' %}">About us</a></li>  
             </ul>
 
             <div class="nav-right">
@@ -47,7 +47,7 @@
                         </svg>
                     </a>
 
-                    <a href="#" aria-label="Wishlist">
+                    <a href="{% url 'store_app:wishlist' %}" aria-label="Wishlist">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                             <path d="M9 7a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="2"/>
@@ -90,7 +90,7 @@
         <div class="footer-links">
             <a href="#">Shop</a>
             <span class="dot">•</span>
-            <a href="{% url 'store:about' %}">About us</a>
+            <a href="{% url 'store_app:about' %}">About us</a>
             <span class="dot">•</span>
             <a href="#">Contact</a>
         </div>

@@ -1,0 +1,180 @@
+/* ============ ABOUT US PAGE ============ */
+
+:root {
+    --velora-cream: #f3e7d6;
+    --velora-cream-soft: #f7efe2;
+    --velora-brown: #3b2a1e;
+    --velora-brown-soft: #6b5849;
+    --velora-orange: #e08a34;
+    --velora-white: #ffffff;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Poppins', sans-serif;
+}
+
+/* ---------- Hero ---------- */
+
+.about-hero {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+}
+
+.about-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+}
+
+.about-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        100deg,
+        rgba(30, 20, 12, 0.55) 0%,
+        rgba(30, 20, 12, 0.25) 45%,
+        rgba(30, 20, 12, 0) 70%
+    );
+}
+
+.about-hero-text {
+    position: absolute;
+    top: 48px;
+    left: 6%;
+    max-width: 420px;
+}
+
+.about-hero-label {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.9rem;
+    color: var(--velora-orange);
+    margin-bottom: 14px;
+}
+
+.about-hero-text p {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--velora-white);
+}
+
+/* ---------- Story section ---------- */
+
+.story-section {
+    background: var(--velora-cream);
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 48px;
+    padding: 64px 6%;
+}
+
+.story-text h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.9rem;
+    color: var(--velora-brown);
+    margin-bottom: 20px;
+}
+
+.story-text p {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: var(--velora-brown-soft);
+    max-width: 60ch;
+    margin-bottom: 16px;
+}
+
+.story-image img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+
+/* ---------- Values section ---------- */
+
+.values-section {
+    background: var(--velora-cream);
+    padding: 8px 6% 72px;
+    text-align: center;
+}
+
+.values-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--velora-orange);
+    margin-bottom: 40px;
+}
+
+.values-heading .rule {
+    height: 1px;
+    width: 170px;
+    background: var(--velora-orange);
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.value-card {
+    background: var(--velora-white);
+    border: 1px solid var(--velora-orange);
+    border-radius: 10px;
+    padding: 32px 24px;
+}
+
+.value-card h3 {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--velora-brown);
+    margin-bottom: 12px;
+}
+
+.value-card p {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--velora-brown-soft);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+    .story-section {
+        grid-template-columns: 1fr;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-hero {
+        height: 260px;
+    }
+
+    .about-hero-text {
+        max-width: 90%;
+    }
+}

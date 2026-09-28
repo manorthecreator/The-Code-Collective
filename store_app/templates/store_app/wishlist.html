@@ -1,0 +1,40 @@
+{% extends 'store_app/base.html' %}
+{% load static %}
+
+{% block title %}My Wishlist · Velora{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'store_app/css/wishlist.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="wishlist-page">
+
+    <header class="wishlist-page-header">
+        <h1>My Wishlist</h1>
+        <p>Your saved pieces of timeless elegance</p>
+    </header>
+
+
+    <div class="wishlist-page-empty">
+
+        <div class="wishlist-page-heart">
+            ♡
+        </div>
+
+        <h2>Your wishlist is empty</h2>
+
+        <p>
+            Save pieces you love and they'll appear here.
+        </p>
+
+        <a href="{% url 'store_app:home' %}" class="wishlist-page-button">
+            Continue Shopping
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
