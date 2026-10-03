@@ -1,0 +1,300 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #F4EBDD;
+}
+
+/* ================= MAIN CONTAINER ================= */
+
+.login-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+/* ================= LEFT SIDE ================= */
+
+.login-image {
+    width: 50%;
+    height: 100vh;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.login-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+/* ================= RIGHT SIDE ================= */
+
+.login-content {
+    width: 50%;
+    height: 100vh;
+    padding: 60px 80px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= LOGO ================= */
+
+.logo {
+    font-family: "Italiana", serif;
+    font-size: 30px;
+    color: #4A3028;
+    text-align: center;
+    margin: 0 0 3px 0;
+}
+
+/* ================= WELCOME ================= */
+
+.login-content h1 {
+    font-size: 28px;
+    text-align: center;
+    color: #241914;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
+    color: #17120F;
+}
+
+/* ================= FORM ================= */
+
+.login-form {
+    width: 100%;
+    margin-top: 35px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    color: #4A3028;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    height: 45px;
+    border: none;
+    border-radius: 8px;
+    background-color: #DCCBB5;
+    padding: 0 18px;
+    font-size: 10px;
+    outline: none;
+}
+
+/* ================= FORGOT PASSWORD ================= */
+
+.forgot-password {
+    text-align: right;
+    margin-top: -15px;
+    margin-bottom: 20px;
+}
+
+.forgot-password a {
+    color: #4A3028;
+    text-decoration: none;
+    font-size: 10px;
+    transition: color 0.3s ease;
+}
+.forgot-password a:hover {
+    color: #C97920;
+    text-decoration: underline;
+}
+/* ================= LOGIN BUTTON ================= */
+
+.login-form button {
+    width: 100%;
+    height: 45px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4A3028;
+    color: #F4EBDD;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ================= OR DIVIDER ================= */
+
+.or-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 26px 0;
+}
+
+.or-divider span {
+    flex: 1;
+    height: 1px;
+    background-color: #B9AA99;
+}
+
+.or-divider p {
+    font-size: 12px;
+    color: #6B625C;
+}
+
+/* ================= SOCIAL BUTTONS ================= */
+
+.social-login {
+    display: flex;
+    gap: 30px;
+}
+
+.social-login button {
+    flex: 1;
+    height: 45px;
+
+    background-color: transparent;
+
+    border: 1px solid #4A3028;
+    border-radius: 7px;
+
+    font-size: 14px;
+    color: #4A3028;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-login button i {
+    font-size: 20px;
+}
+
+/* ================= SIGN UP ================= */
+
+.signup-text {
+    text-align: center;
+    margin-top: 48px;
+    font-size: 12px;
+}
+
+.signup-text a {
+    color: #C97920;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+.signup-text a:hover {
+    color: #4A3028;
+    text-decoration: none;
+}
+
+.input-group input {
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    background-color: #E6D8C6;
+    box-shadow: 0 0 0 2px #4A3028;
+}
+.login-form button, .register-form button {
+    transition: all 0.3s ease;
+}
+
+.login-form button:hover, .register-form button:hover {
+    background-color: #6B463A;
+    transform: translateY(-2px);
+}
+.social-login button {
+    transition: all 0.3s ease;
+}
+
+.social-login button:hover {
+    background-color: #4A3028;
+    color: #F4EBDD;
+    transform: translateY(-2px);
+}
+
+.name-row {
+    display: flex;
+    gap: 20px;
+}
+
+.name-row .input-group {
+    flex: 1;
+}
+
+/* ================= REGISTER FORM ================= */
+
+.register-form {
+    width: 100%;
+    margin-top: 30px;
+}
+.register-form .input-group {
+    margin-bottom: 7px;
+}
+
+.register-form .name-row {
+    margin-bottom: 7px;
+}
+.register-form .input-group input {
+    height: 35px;
+}
+.register-form .input-group label {
+    font-size: 12px;
+     margin-bottom: 5px;
+}
+.register-form button {
+    width: 100%;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 13px;
+
+    background-color: #4A3028;
+    color: #F4EBDD;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+.terms-text {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #6B625C;
+    line-height: 1.5;
+}
+
+.terms-text span {
+    display: block;
+}
+
+.terms-text a {
+    color: #C97920;
+    text-decoration: underline;
+}
+
+.terms-text a:hover {
+    color:  #4A3028;
+}
+.signup-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 12px;
+}
