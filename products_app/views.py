@@ -8,7 +8,7 @@ def product_list(request):
     categories = Category.objects.all()
     colors=(
         ProductVariant.objects
-        .values_list('color', flat=True)
+        .values('color', 'colorCode')
         .distinct()
     )
     sizes=(

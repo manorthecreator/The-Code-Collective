@@ -34,6 +34,12 @@ body{
     padding: 0 24px;
     box-sizing: border-box;
 }
+.shop-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+}
 .shop-title{
     color: #4A3028;
     font-family: Inter;
@@ -154,6 +160,7 @@ body{
     -webkit-appearance: none;
     background: transparent;
     pointer-events: none;
+    z-index: 2;   
 }
 .range-slider::-webkit-slider-runnable-track {
     background: transparent;
@@ -197,13 +204,22 @@ body{
 }
 .range-max::-moz-range-thumb {
     width: 14px;
+    height: 14px;
     border-radius: 50%;
     border: 1px solid #D8C8BB;
     background: #FFFFFF;
     cursor: pointer;
     pointer-events: auto;
 }
-
+.range-fill {
+    position: absolute;
+    top: 8px;
+    height: 4px;
+    background: #6B5145;
+    border-radius: 4px;
+    z-index: 1;
+    pointer-events: none;
+}
 
 
 .price-labels{
@@ -238,5 +254,177 @@ body{
 .color-grid{
     display:flex;
     flex-wrap: wrap;
-    /* gap:10px; */
+    gap:19px;
+}
+.swatch{
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    border:none;
+}
+.swatch:hover{
+    transform: scale(1.08);
+}
+.swatch:active{
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #8A5E3B;
+}
+
+.size-grid{
+    display:flex;
+    flex-wrap: wrap;
+    gap:15px
+}
+.size-btn{
+    border-radius: 4px;
+    background: #FFF;
+    color: #000;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border: 1px solid #e2e2e2;
+    padding: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.size-btn:hover {
+  border-color: #8A5E3B;
+  color: #8A5E3B;
+}
+.size-btn.active {
+  background: #8A5E3B;
+  border-color: #8A5E3B;
+  color: #fff;
+}
+.product-grid{
+    flex: 1;
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:25px;
+}
+.product-card{
+    border-radius: 15px;
+    background: #F4EBDD;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.product-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+.product-image {
+    position: relative;    /*set as relative for the wishlist icon*/
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+     background: #F4EBDD;
+}
+.product-image img{
+    max-width: 100%;
+    max-height:100%;
+    object-fit: contain;
+    display: block;
+}
+.wishlist-btn{
+    position:absolute;
+    top:0px;
+    right:0px;
+    width: 67px;
+    height: 65.726px;
+    border: none;
+    background: transparent;
+    color: #1E1E1E;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+.wishlist-btn:hover {
+  background: rgba(0,0,0,0.05);
+  transform: scale(1.05);
+}
+.wishlist-btn.active svg {
+  fill: #0a0a0a;
+  stroke: #0e0d0d;
+}
+.product-info {
+  background: #fff;
+  padding: 10px 15px 11px 17px;
+  display: flex;
+  flex-direction: column;
+}
+.product-name{
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.product-price{
+    color: #FF9934;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 9px;
+    margin-top: 2px;
+}
+.product-actions{
+    display: flex;
+    gap: 21px;
+}
+.btn-cart,
+.btn-viewDetails{
+    flex: 1;
+    padding: 9px 0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: Inter;
+    font-style: normal;
+    line-height: normal;
+}
+.btn-viewDetails{
+    background: #FFF;
+    border: 2px solid #717171;
+    color: #717171;
+}
+.btn-viewDetails:hover{
+    background: #717171;
+    border-color: #fffcfc;
+    color: white;
+}
+.btn-cart{
+    background: #FF9934;
+    color: #FFF;
+    border: none;
+}
+.btn-cart:hover{
+    background: #FFF;
+    color: #FF9934;
+}
+.btn-cart:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* JQuery Collapse */
+.filter-block.collapsed .category-list,
+.filter-block.collapsed .price-range,
+.filter-block.collapsed .color-grid,
+.filter-block.collapsed .size-grid {
+    display: none;
 }

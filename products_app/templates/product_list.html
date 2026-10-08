@@ -19,7 +19,9 @@
 
     <h1 class="shop-title">Shop</h1>
     <p class="shop-subtitle">Discover our latest collection of timeless pieces.</p>
+</div>
 
+<div class="width-container shop-layout">
     <aside class="sidebar" id="filterSidebar">
 
         <div class="filter-block" data-filter="category">
@@ -66,6 +68,7 @@
             </div>
             <div class="price-range">
                 <div class="range-container">
+                    <div class="range-fill" id="rangeFill"></div>
                     <input type="range" min="0" max="7000" value="0" step="50" class="range-slider range-min" id="minPrice">
                     <input type="range" min="0" max="7000" value="4000" step="50" class="range-slider range-max" id="maxPrice">
                 </div>
@@ -88,11 +91,13 @@
             </div>
             <div class="color-grid">
                 {% for color in colors %}
-                    <button>
+                    <button
+                        type="button"
                         class="swatch"
-                        data-color="{{ color }}"
-                        title="{{ color }}"
-                    </button>>
+                        data-color="{{ color.color }}"
+                        title="{{ color.color }}"
+                        style="background-color: {{ color.colorCode }};">
+                    </button>
                 {% endfor %}
             </div>
         </div>
@@ -113,6 +118,15 @@
             </div>
         </div>
     </aside>
+
+    {% comment %} Product Grid {% endcomment %}
+    <section class="product-grid" id="productGrid">
+        {% include 'product_grid.html' %}
+    </section>
 </div>
 
 {%endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_list.js' %}"></script>
+{% endblock %}

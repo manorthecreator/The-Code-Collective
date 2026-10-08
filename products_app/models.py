@@ -49,6 +49,7 @@ class ProductVariant(models.Model):
 
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
+    colorCode = models.CharField(max_length=7)
     stockQuantity = models.PositiveIntegerField(default=0)
 
     def __str__(self):

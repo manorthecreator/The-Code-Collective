@@ -37,6 +37,7 @@ class ProductVariantAdmin(admin.ModelAdmin):
         'product',
         'size',
         'color',
+        'colorCode',
         'stockQuantity'
     )
 
