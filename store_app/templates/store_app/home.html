@@ -1,0 +1,338 @@
+{% extends 'store_app/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Velora | Home
+{% endblock %}
+
+{% block content %}
+
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero-section">
+
+    <div class="hero">
+
+        <img
+            src="{% static 'store_app/images/hero_1.jpg' %}"
+            alt="Velora Fashion Collection"
+            class="hero-image"
+        >
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <h1>
+                Timeless Elegance,<br>
+                <span>Made for You.</span>
+            </h1>
+
+            <p>
+                Discover curated pieces that blend sophistication,
+                quality and effortless style.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#" class="btn btn-primary">
+                    Shop Now
+                </a>
+
+                <a href="#" class="btn btn-outline">
+                    Collection
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SERVICE FEATURES ================= -->
+
+<div class="services-wrap">
+
+    <section class="services">
+
+        <div class="service-item">
+
+            <div class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12h24v20H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M27 19h9.5L41 24.5V32h-14v-13z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="13" cy="35" r="3.5" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="33" cy="35" r="3.5" stroke="currentColor" stroke-width="2"/>
+                    <path d="M9.5 35h6.5M29 35h.5M3 17h10M3 22h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <div>
+                <h4>FREE DELIVERY</h4>
+                <p>On orders over MUR 2,500</p>
+            </div>
+
+        </div>
+
+
+        <div class="service-divider"></div>
+
+
+        <div class="service-item">
+
+            <div class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 4l16 6v11c0 11-7 18.5-16 23-9-4.5-16-12-16-23V10l16-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M17 24l5 5 10-11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <div>
+                <h4>SECURE PAYMENT</h4>
+                <p>100% secure transactions</p>
+            </div>
+
+        </div>
+
+
+        <div class="service-divider"></div>
+
+
+        <div class="service-item">
+
+            <div class="service-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M40 24a16 16 0 1 1-5-11.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M40 6v9h-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <div>
+                <h4>EASY RETURNS</h4>
+                <p>30-day return policy</p>
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- ================= CATEGORY SECTION ================= -->
+
+<section class="categories-section">
+
+    <div class="section-heading">
+
+        <span></span>
+
+        <h2>SHOP BY CATEGORY</h2>
+
+        <span></span>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <!-- WOMEN -->
+
+        <div class="category-card">
+
+            <img
+                src="{% static 'store_app/images/women (2).jpg' %}"
+                alt="Women's fashion"
+            >
+
+            <div class="category-overlay"></div>
+
+            <div class="category-content">
+
+                <h3>WOMEN</h3>
+
+                <a href="#" class="category-button">
+                    Shop Now
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- MEN -->
+
+        <div class="category-card">
+
+            <img
+                src="{% static 'store_app/images/men (2).jpg' %}"
+                alt="Men's fashion"
+            >
+
+            <div class="category-overlay"></div>
+
+            <div class="category-content">
+
+                <h3>MEN</h3>
+
+                <a href="#" class="category-button">
+                    Shop Now
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACCESSORIES -->
+
+        <div class="category-card">
+
+            <img
+                src="{% static 'store_app/images/accessories (2).jpg' %}"
+                alt="Fashion accessories"
+            >
+
+            <div class="category-overlay"></div>
+
+            <div class="category-content">
+
+                <h3>ACCESSORIES</h3>
+
+                <a href="#" class="category-button">
+                    Shop Now
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= NEW ARRIVALS ================= -->
+
+<section class="new-arrivals">
+
+    <div class="section-title">
+
+        <h2>NEW ARRIVALS</h2>
+
+        <button class="products-next" aria-label="Next products">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+
+    </div>
+
+
+    <div class="products-grid">
+
+        <!-- PRODUCT 1 -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <span class="new-badge">NEW</span>
+
+                <button class="wishlist" aria-label="Add to wishlist">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 20s-7-4.3-9.5-9C.8 7.2 2.6 3.8 6 3.4c2-.2 3.7.8 4.6 2.4L12 7.2l1.4-1.4c.9-1.6 2.6-2.6 4.6-2.4 3.4.4 5.2 3.8 3.5 7.6-2.5 4.7-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <img
+                    src="{% static 'store_app/images/product (2).jpg' %}"
+                    alt="Striped sweater"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCT 2 -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <span class="new-badge">NEW</span>
+
+                <button class="wishlist" aria-label="Add to wishlist">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 20s-7-4.3-9.5-9C.8 7.2 2.6 3.8 6 3.4c2-.2 3.7.8 4.6 2.4L12 7.2l1.4-1.4c.9-1.6 2.6-2.6 4.6-2.4 3.4.4 5.2 3.8 3.5 7.6-2.5 4.7-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <img
+                    src="{% static 'store_app/images/product (4).jpg' %}"
+                    alt="White shirt"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCT 3 -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <span class="new-badge">NEW</span>
+
+                <button class="wishlist" aria-label="Add to wishlist">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 20s-7-4.3-9.5-9C.8 7.2 2.6 3.8 6 3.4c2-.2 3.7.8 4.6 2.4L12 7.2l1.4-1.4c.9-1.6 2.6-2.6 4.6-2.4 3.4.4 5.2 3.8 3.5 7.6-2.5 4.7-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <img
+                    src="{% static 'store_app/images/product (5).jpg' %}"
+                    alt="New arrival cap"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCT 4 -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <span class="new-badge">NEW</span>
+
+                <button class="wishlist" aria-label="Add to wishlist">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 20s-7-4.3-9.5-9C.8 7.2 2.6 3.8 6 3.4c2-.2 3.7.8 4.6 2.4L12 7.2l1.4-1.4c.9-1.6 2.6-2.6 4.6-2.4 3.4.4 5.2 3.8 3.5 7.6-2.5 4.7-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <img
+                    src="{% static 'store_app/images/product (1).jpg' %}"
+                    alt="Luxury handbag"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
