@@ -1,0 +1,5 @@
+{% for product in products %}
+  {% include 'product_card.html' with product=product %}
+{% empty %}
+  <p class="no-products">No products found.</p>
+{% endfor %}

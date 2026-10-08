@@ -9,7 +9,10 @@
     <title>{% block title %}Velora{% endblock %}</title>
 
     <link rel="stylesheet" href="{% static 'store_app/css/store.css' %}">
-
+    <!-- Adding Google Fonts for Inter and Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     {% block extra_head %}{% endblock %}
 </head>
 
@@ -125,6 +128,13 @@
         <p class="footer-copy">© 2026 Velora. All rights reserved.</p>
 
     </footer>
+
+    <!-- jQuery CDN (global — loaded on every page) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+
+    {% block extra_js %}{% endblock %}
 
 </body>
 </html>
