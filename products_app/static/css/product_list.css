@@ -311,6 +311,8 @@ body{
     display: flex;
     flex-direction: column;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
+    padding: 0;
+    align-items: stretch;
 }
 .product-card:hover {
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
@@ -333,8 +335,8 @@ body{
 }
 .wishlist-btn{
     position:absolute;
-    top:0px;
-    right:0px;
+    top:-15px;
+    right:-15px;
     width: 67px;
     height: 65.726px;
     border: none;
@@ -360,6 +362,8 @@ body{
   padding: 10px 15px 11px 17px;
   display: flex;
   flex-direction: column;
+  width:100%;
+  box-sizing: border-box;
 }
 .product-name{
     color: #000;
