@@ -15,15 +15,46 @@ def product_list(request):
         ProductVariant.objects
         .values_list('size', flat=True)
         .distinct()
+        .order_by('size')
     )
     category = request.GET.get("category")
     if category and category != "all":
         products = products.filter(category_id=category)
 
-    return render(request, "product_list.html", {
-        "products": products,
-        "categories": categories,
-        "colors": colors,
-        "sizes": sizes,
-        "selected_category": category or "all",
-    })
+    min_price=request.GET.get('min_price')
+    max_price=request.GET.get('max_price')
+    if min_price:
+        products=products.filter(price__gte=min_price)
+    if max_price:
+        products=products.filter(price__lte=max_price)
+
+    selected_colors=request.GET.get('colors','')
+    if selected_colors:
+        color_list=selected_colors.split(',')
+        products=products.filter(
+            variants__color__in=color_list
+        )
+
+    size=request.GET.get('size')
+    if size:
+        products=products.filter(
+            variants__size=size
+        )
+    #Prevent duplicate products when matching multiple variants
+    products=products.distinct()
+
+    context = {
+        'products': products,
+        'categories': categories,
+        'colors': colors,
+        'sizes': sizes,
+        'selected_category': category or 'all',
+        'selected_colors': selected_colors,
+        'selected_size': size or '',
+        'min_price': min_price or '0',
+        'max_price': max_price or '4000',
+    }
+    if request.headers.get('x-requested-with')=='XMLHttpRequest':
+        return render(request, "product_grid.html",context)
+
+    return render(request,'product_list.html',context)

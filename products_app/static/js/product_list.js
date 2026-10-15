@@ -53,12 +53,14 @@ $(function () {
     //    ---------- Color swatches (multi-select) ---------- 
     $('.swatch').on('click', function () {
         $(this).toggleClass('active');
+        applyFilters();
     });
 
     //    ---------- Size buttons (single-select) ---------- 
     $('.size-btn').on('click', function () {
         $(this).siblings().removeClass('active');
         $(this).toggleClass('active');
+        applyFilters();
     });
 
     //    ---------- Category change (submit immediately) ---------- 
@@ -75,23 +77,28 @@ $(function () {
     function getFilters() {
     const params = {};
 
-    // Category (single)
+    // Category
     const category = $('input[name="category"]:checked').val();
-    if (category) params.category = category;
-
-    // Price
-    params.max_price = $('#priceRange').val();
+    if (category) {
+        params.category = category;
+    }
+    // MAX & MIN Price
+    params.max_price = $('#maxPrice').val();
+    params.min_price=$('#minPrice').val();
 
     // Colors (multi)
     const colors = $('.swatch.active').map(function () {
       return $(this).data('color');
     }).get();
-    if (colors.length) params.colors = colors.join(',');
+    if (colors.length) {
+        params.colors = colors.join(',');
+    }
 
     // Size (single)
     const size = $('.size-btn.active').data('size');
-    if (size) params.size = size;
-
+    if (size) {
+        params.size = size;
+    }
     return params;
   }
 
@@ -99,5 +106,28 @@ $(function () {
 
 
 //   -----------------------AJAX Part------------------------------------------
+  function applyFilters(){
+    const params=getFilters();
 
+    $.ajax({
+        url:window.location.pathname,
+        type:'GET',
+        data:params,
+        headers:{
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        success:function(html){
+            $('#productGrid').html(html);
+
+            const queryString=$.param(params);
+            const newUrl=queryString
+                ? window.location.pathname +'?'+queryString
+                : window.location.pathname;
+            window.history.replaceState({},'',newUrl);
+        },
+        error:function(xhr){
+            console.error('AJAX errror:',xhr.status,xhr.responseText);
+        }
+    })
+  }
 });
