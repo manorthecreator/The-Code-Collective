@@ -38,7 +38,11 @@
             <ul class="category-list">
                 <li>
                     <label class="radio-row">
-                        <input type="radio" name="category" value="" checked>
+                        <input type="radio" name="category" value="all"
+                            {% if not request.GET.category or request.GET.category == 'all' %}
+                                checked
+                            {% endif %}
+                        >
                         <span class="radio-dot"></span>
                         <span>All Categories</span>
                     </label>
