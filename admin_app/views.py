@@ -1,71 +1,34 @@
+from urllib import request
+
 import django.shortcuts
 
 from django.shortcuts import render
 from django.db.models import Sum, Q, Count, Avg, F 
 from django.utils import timezone
 from datetime import date, timedelta
+from matplotlib.style import context
 
 from products_app.models import Product, Category, ProductVariant
-from orders_app.models import Order, OrderItem      #don't have yet
-from accounts_app.models import Customer    #don't have yet
+#from orders_app.models import Order, OrderItem      #don't have yet
+#from accounts_app.models import Customer    #don't have yet
 
 def dashboard(request):
-    today = timezone.now().date()
-    thirty_days_ago = today - timedelta(days=30)
-
-    # 1. Stat Cards
-    total_revenue = Order.objects.filter(status='Delivered').aggregate(total=Sum('totalPrice'))['total'] or 0
-    total_orders = Order.objects.count()
-    total_customers = Customer.objects.count()
-
-    # 2. Top Selling Products
-    top_products = Product.objects.annotate(
-        units_sold=Sum('orderitem__quantity')
-    ).order_by('-units_sold')[:3]
-
-    # 3. Recent Orders
-    recent_orders = Order.objects.select_related('customer').order_by('-orderDate')[:5]
-
-    # 4. Pending Orders Count for Badge
-    pending_count = Order.objects.filter(status='Pending').count()
-
-    context = {
-        'today': today,
-        'stats': {
-            'revenue': f"{total_revenue:,.2f}",
-            'orders': total_orders,
-            'customers': total_customers,
-            'revenue_delta': 12,  # Dynamic calculation can be added based on previous period
-            'orders_delta': 8,
-            'customers_delta': -2,
-        },
-        'top_products': [
-            {
-                'name': p.name,
-                'category': p.category.name if p.category else 'General',
-                'units': p.units_sold or 0,
-                'share': min(100, (p.units_sold or 0) * 5),
-                'image': p.image.url if p.image else ''
-            } for p in top_products
-        ],
-        'orders': [
-            {
-                'id': o.orderID,
-                'customer': f"{o.customer.firstName} {o.customer.lastName}" if o.customer else "Guest",
-                'date': o.orderDate.strftime('%Y/%m/%d'),
-                'status': o.status,
-                'total': f"{o.totalPrice:,.2f}"
-            } for o in recent_orders
-        ],
-        'pending_count': pending_count,
-        'sales': {
-            '30': {
-                'labels': ['May 14', 'May 18', 'May 22', 'May 26', 'May 30', 'Jun 3', 'Jun 7'],
-                'values': [4000, 5200, 3100, 6800, 8200, 5400, 7900]
-            }
-        }
-    }
-    return render(request, 'admin_app/dashboard.html', context)
+      context = {
+          'today': timezone.now().date(),
+          'stats': {'revenue': '184,200', 'orders': 312, 'customers': 1204,
+                    'revenue_delta': 12, 'orders_delta': 8, 'customers_delta': -2},
+          'top_products': [],
+          'orders': [
+              {'id': 1042, 'customer': 'Amina R.', 'date': '2026/10/24', 'status': 'Processing', 'total': '3,450.00'},
+              {'id': 1041, 'customer': 'Kevin M.', 'date': '2026/10/23', 'status': 'Shipped', 'total': '1,980.00'},
+          ],
+          'pending_count': 3,
+          'sales': {'30': {'labels': ['Oct 1', 'Oct 8', 'Oct 15', 'Oct 22'],
+                           'values': [4000, 5200, 3100, 6800]},
+                    '7': {'labels': ['Mon', 'Tue', 'Wed'], 'values': [2000, 3000, 2500]},
+                    '90': {'labels': ['Aug', 'Sep', 'Oct'], 'values': [4000, 6000, 8000]}},
+      }
+      return render(request, 'admin_app/dashboard.html', context)
 
 
 def products_view(request):
@@ -141,40 +104,21 @@ def products_view(request):
     return render(request, 'admin_app/products.html', context)
 
 def customers_view(request):
-    customers_qs = Customer.objects.annotate(
-        order_count=Count('order'),
-        total_spent=Sum('order__totalPrice')
-    ).all()
-
     context = {
         'customers': [
-            {
-                'name': f"{c.firstName} {c.lastName}",
-                'email': c.user.email if hasattr(c, 'user') and c.user else '',
-                'orders': c.order_count or 0,
-                'spent': f"{c.total_spent or 0:,.2f}"
-            } for c in customers_qs
+            {'name': 'Amina Rahman', 'email': 'amina@example.com', 'orders': 5, 'spent': '12,400.00'},
+            {'name': 'Kevin Moorghen', 'email': 'kevin@example.com', 'orders': 2, 'spent': '3,980.00'},
         ]
     }
     return render(request, 'admin_app/customers.html', context)
    
 def orders_view(request):
-    status_filter = request.GET.get('status', 'all')
-    orders_qs = Order.objects.select_related('customer').prefetch_related('items').order_by('-orderDate')
-
-    if status_filter != 'all':
-        orders_qs = orders_qs.filter(status__iexact=status_filter)
-
     context = {
         'orders': [
-            {
-                'id': f"VL{o.orderID}",
-                'customer': f"{o.customer.firstName} {o.customer.lastName}" if o.customer else "Guest",
-                'date': o.orderDate.strftime('%b %d, %Y'),
-                'items': f"{o.items.count()} items",
-                'status': o.status,
-                'total': f"{o.totalPrice:,.2f}"
-            } for o in orders_qs
+            {'id': 'VL1042', 'customer': 'Amina Rahman', 'date': 'Oct 24, 2026',
+             'items': '3 items', 'status': 'Processing', 'total': '3,450.00'},
+            {'id': 'VL1041', 'customer': 'Kevin Moorghen', 'date': 'Oct 23, 2026',
+             'items': '1 items', 'status': 'Shipped', 'total': '1,980.00'},
         ]
     }
     return render(request, 'admin_app/orders.html', context)
@@ -197,41 +141,18 @@ def settings_view(request):
     return django.shortcuts.render(request, 'admin_app/settings.html', context)
 
 def analytics_view(request):
-    total_rev = Order.objects.filter(status='Delivered').aggregate(Sum('totalPrice'))['totalPrice__sum'] or 0
-    order_count = Order.objects.count()
-    avg_val = Order.objects.aggregate(Avg('totalPrice'))['totalPrice__avg'] or 0
-
-    categories_breakdown = Category.objects.annotate(
-        cat_total=Sum('product__orderitem__subtotal')
-    )
-
     context = {
-        'stats': {
-            'revenue': f"{total_rev:,.2f}",
-            'orders': order_count,
-            'avg_order': f"{avg_val:,.2f}",
-            'increase': '+ 24%',
-        },
+        'stats': {'revenue': '184,200.00', 'orders': 312, 'avg_order': '590.38', 'increase': '+ 24%'},
         'categories': [
-            {
-                'name': c.name,
-                'amount': f"{c.cat_total or 0:,.2f}",
-                'percentage': round(((c.cat_total or 0) / (total_rev or 1)) * 100, 1),
-                'color': '#985922'
-            } for c in categories_breakdown
+            {'name': 'Clothing', 'amount': '90,000.00', 'percentage': 48.9, 'color': '#985922'},
+            {'name': 'Shoes', 'amount': '60,000.00', 'percentage': 32.6, 'color': '#985922'},
         ],
         'top_products': Product.objects.all()[:3],
         'traffic_sources': [
             {'source': 'Direct', 'percentage': 38.7},
             {'source': 'Search Engines', 'percentage': 28.4},
             {'source': 'Social Media', 'percentage': 17.9},
-            {'source': 'Email Campaigns', 'percentage': 9.6},
-            {'source': 'Referrals', 'percentage': 5.4},
         ],
-        'customer_insights': {
-            'total': Customer.objects.count(),
-            'new': Customer.objects.filter(user__createdDate__gte=timezone.now()-timedelta(days=30)).count() if hasattr(Customer, 'user') else 0,
-            'returning': Customer.objects.annotate(c=Count('order')).filter(c__gt=1).count()
-        }
+        'customer_insights': {'total': 1204, 'new': 41, 'returning': 380},
     }
     return render(request, 'admin_app/analytics.html', context)
