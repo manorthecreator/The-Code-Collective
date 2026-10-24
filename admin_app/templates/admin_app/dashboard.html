@@ -1,275 +1,167 @@
+{% extends 'admin_app/base_admin.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard · Velora Admin</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'admin_app/css/dashboard.css' %}">
-</head>
-<body>
+{% block title %}Dashboard{% endblock %}
+{% block nav_dash %}is-active{% endblock %}
 
-<div class="adm-shell">
+{% block content %}
+<!-- Greeting -->
+<section class="adm-hello">
+    <div>
+        <h1>Good day, Admin</h1>
+        <p>Here is how Velora is doing today, {{ today|date:"l, j F Y" }}.</p>
+    </div>
+    <a href="#" class="adm-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add product
+    </a>
+</section>
 
-    <!-- ================= SIDEBAR ================= -->
-    <aside class="adm-sidebar" id="adm-sidebar">
-
-        <a href="{% url 'store_app:home' %}" class="adm-brand">
-            <span class="adm-brand-name">Velora</span>
-            <span class="adm-brand-tag">Admin</span>
-        </a>
-
-        <nav class="adm-nav" aria-label="Admin">
-            <a href="#" class="adm-nav-item is-active" aria-current="page">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>
-                Dashboard
-            </a>
-            <a href="#" class="adm-nav-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
-                Products
-            </a>
-            <a href="#" class="adm-nav-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
-                Orders
-                <span class="adm-badge">{{ pending_count }}</span>
-            </a>
-            <a href="#" class="adm-nav-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.4c2 .8 3.5 2.6 3.5 5.6"/></svg>
-                Customers
-            </a>
-            <a href="#" class="adm-nav-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V4M16 20v-7M21 20H3"/></svg>
-                Analytics
-            </a>
-            <a href="#" class="adm-nav-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>
-                Settings
-            </a>
-        </nav>
-
-        <div class="adm-sidebar-foot">
-            <div class="adm-user">
-                <span class="adm-avatar">R</span>
-                <div>
-                    <strong>Rehana</strong>
-                    <small>Store manager</small>
-                </div>
-            </div>
-            <a href="#" class="adm-logout">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-                Logout
-            </a>
+<!-- Stats -->
+<section class="adm-stats">
+    <article class="adm-stat">
+        <span class="adm-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/></svg>
+        </span>
+        <div>
+            <p class="adm-stat-label">Total revenue</p>
+            <p class="adm-stat-value"><small>Rs</small> <span data-count="{{ stats.revenue }}">{{ stats.revenue }}</span></p>
         </div>
+        <span class="adm-delta is-up">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            {{ stats.revenue_delta }}%
+        </span>
+    </article>
+    <article class="adm-stat">
+        <span class="adm-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
+        </span>
+        <div>
+            <p class="adm-stat-label">Total orders</p>
+            <p class="adm-stat-value"><span data-count="{{ stats.orders }}">{{ stats.orders }}</span></p>
+        </div>
+        <span class="adm-delta is-up">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            {{ stats.orders_delta }}%
+        </span>
+    </article>
+    <article class="adm-stat">
+        <span class="adm-stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.4c2 .8 3.5 2.6 3.5 5.6"/></svg>
+        </span>
+        <div>
+            <p class="adm-stat-label">Customers</p>
+            <p class="adm-stat-value"><span data-count="{{ stats.customers }}">{{ stats.customers }}</span></p>
+        </div>
+        <span class="adm-delta is-down">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 9v8H9"/></svg>
+            {{ stats.customers_delta }}%
+        </span>
+    </article>
+</section>
 
-    </aside>
-
-    <div class="adm-scrim" id="adm-scrim"></div>
-
-    <!-- ================= MAIN ================= -->
-    <div class="adm-main">
-
-        <header class="adm-topbar">
-            <button class="adm-menu" id="adm-menu" aria-label="Open menu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-            </button>
-
-            <label class="adm-search">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-                <input type="search" placeholder="Search orders, products, customers">
-            </label>
-
-            <div class="adm-top-actions">
-                <a href="{% url 'store_app:home' %}" class="adm-top-link">View store</a>
-                <button class="adm-bell" aria-label="Notifications">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-                    <span class="adm-dot"></span>
-                </button>
+<!-- Chart + top products -->
+<section class="adm-row">
+    <article class="adm-card adm-chart-card">
+        <header class="adm-card-head">
+            <div>
+                <h2>Sales overview</h2>
+                <p class="adm-sub" id="chart-total"></p>
+            </div>
+            <div class="adm-seg" role="tablist" aria-label="Date range">
+                <button role="tab" data-range="7">7 days</button>
+                <button role="tab" data-range="30" class="is-active" aria-selected="true">30 days</button>
+                <button role="tab" data-range="90">90 days</button>
             </div>
         </header>
+        <div class="adm-chart" id="chart"></div>
+        <div class="adm-tip" id="chart-tip" hidden></div>
+    </article>
 
-        <main class="adm-content">
-
-            <!-- Greeting -->
-            <section class="adm-hello">
-                <div>
-                    <h1>Good day, Admin</h1>
-                    <p>Here is how Velora is doing today, {{ today|date:"l, j F Y" }}.</p>
+    <article class="adm-card">
+        <header class="adm-card-head">
+            <h2>Top selling products</h2>
+            <a href="#" class="adm-link">View all</a>
+        </header>
+        <ul class="adm-top-list">
+            {% for p in top_products %}
+            <li>
+                <span class="adm-thumb">
+                    <img src="{% static p.image %}" alt="" onerror="this.remove()">
+                </span>
+                <div class="adm-top-info">
+                    <div class="adm-top-line">
+                        <strong>{{ p.name }}</strong>
+                        <span>{{ p.units }} sold</span>
+                    </div>
+                    <small>{{ p.category }}</small>
+                    <div class="adm-bar">
+                        <i class= "adm-bar-fill" data-share="{{ p.share }}"></i></div>
                 </div>
-                <a href="#" class="adm-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-                    Add product
-                </a>
-            </section>
+            </li>
+            {% endfor %}
+        </ul>
+    </article>
+</section>
 
-            <!-- Stats -->
-            <section class="adm-stats">
+<!-- Recent orders -->
+<section class="adm-card adm-orders">
+    <header class="adm-card-head">
+        <h2>Recent orders</h2>
+        <div class="adm-head-tools">
+            <select id="status-filter" aria-label="Filter by status">
+                <option value="all">All statuses</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+            </select>
+            <a href="#" class="adm-link">View all</a>
+        </div>
+    </header>
 
-                <article class="adm-stat">
-                    <span class="adm-stat-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/></svg>
-                    </span>
-                    <div>
-                        <p class="adm-stat-label">Total revenue</p>
-                        <p class="adm-stat-value"><small>Rs</small> <span data-count="{{ stats.revenue }}">{{ stats.revenue }}</span></p>
-                    </div>
-                    <span class="adm-delta is-up">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-                        {{ stats.revenue_delta }}%
-                    </span>
-                </article>
-
-                <article class="adm-stat">
-                    <span class="adm-stat-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
-                    </span>
-                    <div>
-                        <p class="adm-stat-label">Total orders</p>
-                        <p class="adm-stat-value"><span data-count="{{ stats.orders }}">{{ stats.orders }}</span></p>
-                    </div>
-                    <span class="adm-delta is-up">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-                        {{ stats.orders_delta }}%
-                    </span>
-                </article>
-
-                <article class="adm-stat">
-                    <span class="adm-stat-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.4c2 .8 3.5 2.6 3.5 5.6"/></svg>
-                    </span>
-                    <div>
-                        <p class="adm-stat-label">Customers</p>
-                        <p class="adm-stat-value"><span data-count="{{ stats.customers }}">{{ stats.customers }}</span></p>
-                    </div>
-                    <span class="adm-delta is-down">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 9v8H9"/></svg>
-                        {{ stats.customers_delta }}%
-                    </span>
-                </article>
-
-            </section>
-
-            <!-- Chart + top products -->
-            <section class="adm-row">
-
-                <article class="adm-card adm-chart-card">
-                    <header class="adm-card-head">
-                        <div>
-                            <h2>Sales overview</h2>
-                            <p class="adm-sub" id="chart-total"></p>
-                        </div>
-                        <div class="adm-seg" role="tablist" aria-label="Date range">
-                            <button role="tab" data-range="7">7 days</button>
-                            <button role="tab" data-range="30" class="is-active" aria-selected="true">30 days</button>
-                            <button role="tab" data-range="90">90 days</button>
-                        </div>
-                    </header>
-                    <div class="adm-chart" id="chart"></div>
-                    <div class="adm-tip" id="chart-tip" hidden></div>
-                </article>
-
-                <article class="adm-card">
-                    <header class="adm-card-head">
-                        <h2>Top selling products</h2>
-                        <a href="#" class="adm-link">View all</a>
-                    </header>
-
-                    <ul class="adm-top-list">
-                        {% for p in top_products %}
-                        <li>
-                            <span class="adm-thumb">
-                                <img src="{% static p.image %}" alt="" onerror="this.remove()">
-                            </span>
-                            <div class="adm-top-info">
-                                <div class="adm-top-line">
-                                    <strong>{{ p.name }}</strong>
-                                    <span>{{ p.units }} sold</span>
-                                </div>
-                                <small>{{ p.category }}</small>
-                                <div class="adm-bar">
-                                    <i class= "adm-bar-fill" data-share="{{ p.share }}"></i></div>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </article>
-
-            </section>
-
-            <!-- Recent orders -->
-            <section class="adm-card adm-orders">
-                <header class="adm-card-head">
-                    <h2>Recent orders</h2>
-                    <div class="adm-head-tools">
-                        <select id="status-filter" aria-label="Filter by status">
-                            <option value="all">All statuses</option>
-                            <option value="processing">Processing</option>
-                            <option value="shipped">Shipped</option>
-                            <option value="delivered">Delivered</option>
-                        </select>
-                        <a href="#" class="adm-link">View all</a>
-                    </div>
-                </header>
-
-                <div class="adm-table-wrap">
-                    <table class="adm-table">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th class="num">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody id="orders-body">
-                            {% for o in orders %}
-                            <tr data-status="{{ o.status|lower }}">
-                                <td class="adm-id">#{{ o.id }}</td>
-                                <td>
-                                    <span class="adm-cust">
-                                        <span class="adm-mini-avatar">{{ o.customer|slice:":1" }}</span>
-                                        {{ o.customer }}
-                                    </span>
-                                </td>
-                                <td>{{ o.date }}</td>
-                                <td><span class="adm-pill is-{{ o.status|lower }}">{{ o.status }}</span></td>
-                                <td class="num">Rs {{ o.total }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-        </main>
+    <div class="adm-table-wrap">
+        <table class="adm-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th class="num">Total</th>
+                </tr>
+            </thead>
+            <tbody id="orders-body">
+                {% for o in orders %}
+                <tr data-status="{{ o.status|lower }}">
+                    <td class="adm-id">#{{ o.id }}</td>
+                    <td>
+                        <span class="adm-cust">
+                            <span class="adm-mini-avatar">{{ o.customer|slice:":1" }}</span>
+                            {{ o.customer }}
+                        </span>
+                    </td>
+                    <td>{{ o.date }}</td>
+                    <td><span class="adm-pill is-{{ o.status|lower }}">{{ o.status }}</span></td>
+                    <td class="num">Rs {{ o.total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-</div>
+</section>
 
 {{ sales|json_script:"sales-data" }}
+{% endblock %}
 
+{% block extra_js %}
 <script>
-
     document.querySelectorAll('.adm-bar-fill').forEach((bar) => {
         const share = Number(bar.dataset.share);
         bar.style.width = `${Math.max(0, Math.min(100, Number.isFinite(share) ? share : 0))}%`;
-
     });
+
 (function () {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    /* ---------- mobile sidebar ---------- */
-    const sidebar = document.getElementById('adm-sidebar');
-    const scrim = document.getElementById('adm-scrim');
-    const toggle = (open) => {
-        sidebar.classList.toggle('is-open', open);
-        scrim.classList.toggle('is-open', open);
-    };
-    document.getElementById('adm-menu').addEventListener('click', () => toggle(true));
-    scrim.addEventListener('click', () => toggle(false));
 
     /* ---------- stat count-up (runs once on load) ---------- */
     document.querySelectorAll('[data-count]').forEach((el) => {
@@ -292,7 +184,9 @@
     });
 
     /* ---------- sales chart ---------- */
-    const sales = JSON.parse(document.getElementById('sales-data').textContent);
+    const salesDataEl = document.getElementById('sales-data');
+    if (!salesDataEl) return;
+    const sales = JSON.parse(salesDataEl.textContent);
     const box = document.getElementById('chart');
     const tip = document.getElementById('chart-tip');
     const totalEl = document.getElementById('chart-total');
@@ -308,6 +202,7 @@
     };
 
     function draw() {
+        if (!sales || !sales[range]) return;
         const { labels, values } = sales[range];
         const W = box.clientWidth, H = 270;
         const m = { t: 16, r: 12, b: 30, l: 44 };
@@ -388,6 +283,4 @@
     new ResizeObserver(draw).observe(box);
 })();
 </script>
-
-</body>
-</html>
+{% endblock %}

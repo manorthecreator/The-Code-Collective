@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin{% endblock %} · Velora</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'admin_app/css/dashboard.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<div class="adm-shell">
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="adm-sidebar" id="adm-sidebar">
+        <a href="{% url 'store_app:home' %}" class="adm-brand">
+            <span class="adm-brand-name">Velora</span>
+            <span class="adm-brand-tag">Admin</span>
+        </a>
+
+        <nav class="adm-nav" aria-label="Admin">
+            <a href="{% url 'admin_app:dashboard' %}" class="adm-nav-item {% block nav_dash %}{% endblock %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>
+                Dashboard
+            </a>
+            <a href="{% url 'admin_app:products' %}" class="adm-nav-item {% block nav_prod %}{% endblock %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M6 7h12l-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+                Products
+            </a>
+            <a href="{% url 'admin_app:orders' %}" class="adm-nav-item {% block nav_ord %}{% endblock %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>
+                Orders
+                <span class="adm-badge">{{ pending_count|default:"0" }}</span>
+            </a>
+            <a href="{% url 'admin_app:customers' %}" class="adm-nav-item {% block nav_cust %}{% endblock %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.4c2 .8 3.5 2.6 3.5 5.6"/></svg>
+                Customers
+            </a>
+            <a href="{% url 'admin_app:analytics' %}" class="adm-nav-item {% block nav_stat %}{% endblock %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V4M16 20v-7M21 20H3"/></svg>
+                Analytics
+            </a>
+            <a href="{% url 'admin_app:settings' %}" class="adm-nav-item {% block nav_set %}{% endblock %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+                Settings
+            </a>
+        </nav>
+
+        <div class="adm-sidebar-foot">
+            <div class="adm-user">
+                <span class="adm-avatar">R</span>
+                <div>
+                    <strong>Rehana</strong>
+                    <small>Store manager</small>
+                </div>
+            </div>
+            <a href="{% url 'accounts_app:logout' %}" class="adm-logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                Logout
+            </a>
+        </div>
+    </aside>    
+
+    <div class="adm-scrim" id="adm-scrim"></div>
+
+    <!-- ================= MAIN ================= -->
+    <div class="adm-main">
+        <header class="adm-topbar">
+            <button class="adm-menu" id="adm-menu" aria-label="Open menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+            <label class="adm-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+                <input type="search" placeholder="Search orders, products, customers">
+            </label>
+            <div class="adm-top-actions">
+                <a href="{% url 'store_app:home' %}" class="adm-top-link">View store</a>
+                <button class="adm-bell" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+                    <span class="adm-dot"></span>
+                </button>
+            </div>
+        </header>
+
+        <main class="adm-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+</div>
+
+<script>
+(function () {
+    /* ---------- mobile sidebar ---------- */
+    const sidebar = document.getElementById('adm-sidebar');
+    const scrim = document.getElementById('adm-scrim');
+    const toggle = (open) => {
+        sidebar.classList.toggle('is-open', open);
+        scrim.classList.toggle('is-open', open);
+    };
+    document.getElementById('adm-menu').addEventListener('click', () => toggle(true));
+    scrim.addEventListener('click', () => toggle(false));
+
+    /* ---------- Logout Modal Control ---------- */
+    const logoutModal = document.getElementById('logout-modal');
+    const logoutBtn = document.querySelector('.adm-logout');
+    const cancelLogoutBtn = document.getElementById('cancel-logout');
+
+    if (logoutBtn && logoutModal) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logoutModal.style.display = 'grid';
+        });
+    }
+    if (cancelLogoutBtn && logoutModal) {
+        cancelLogoutBtn.addEventListener('click', () => {
+            logoutModal.style.display = 'none';
+        });
+    }
+})();
+</script>
+
+{% block extra_js %}{% endblock %}
+
+<!-- Logout Confirmation Modal -->
+<div id="logout-modal" style="display: none; position: fixed; inset: 0; background: rgba(51, 32, 26, .5); z-index: 100; place-items: center;">
+    <div style="background: var(--white); padding: 32px 28px; border-radius: 16px; width: 360px; text-align: center; box-shadow: var(--shadow);">
+        <div style="width: 48px; height: 48px; border-radius: 12px; border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--brown-900);">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </div>
+        <h3 style="margin: 0 0 8px; font-size: 1.15rem; color: var(--ink);">Are you sure you want to log out?</h3>
+        <p style="margin: 0 0 24px; font-size: .85rem; color: var(--muted); line-height: 1.4;">You will need to sign in again to access your account.</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <button id="cancel-logout" style="padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--white); color: var(--brown-900); font-weight: 500; cursor: pointer;">Cancel</button>
+            <form method="post" action="{% url 'accounts_app:logout' %}">
+                {% csrf_token %}
+                <button type="submit" style="width: 100%; padding: 10px; border: none; border-radius: 10px; background: #e02424; color: white; font-weight: 600; cursor: pointer;">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
