@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment | Velora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Italiana&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'payment_app/css/payment.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Velora</a>
+    <div class="secure-note"><span class="lock">✓</span> Secure checkout</div>
+  </header>
+
+  <main class="checkout-wrap">
+    <nav class="steps" aria-label="Checkout progress">
+      <span class="step done"><b>1</b> Cart</span><span class="step-line"></span>
+      <span class="step done"><b>2</b> Details</span><span class="step-line"></span>
+      <span class="step active"><b>3</b> Payment</span>
+    </nav>
+
+    <div class="page-heading">
+      <p class="eyebrow">ALMOST YOURS</p>
+      <h1>Complete your order</h1>
+      <p class="intro">Choose your preferred payment method to complete your order.</p>
+    </div>
+
+    <div class="checkout-grid">
+      <section class="panel payment-panel">
+        <div class="panel-title">
+          <div><h2>Payment method</h2><p>Select your preferred payment option.</p></div>
+          <span class="step-number">01</span>
+        </div>
+
+        <form id="payment-form">
+          <div class="method-options">
+            <label class="method-card selected" for="card">
+              <input type="radio" name="payment_method" id="card" value="card" checked>
+              <span class="method-icon">▤</span><span class="method-copy"><strong>Card payment</strong><small>Credit or debit card</small></span><span class="radio-mark"></span>
+            </label>
+            <label class="method-card" for="cash">
+              <input type="radio" name="payment_method" id="cash" value="cash">
+              <span class="method-icon cash-icon">M</span><span class="method-copy"><strong>Cash on delivery</strong><small>Pay when your order arrives</small></span><span class="radio-mark"></span>
+            </label>
+          </div>
+
+          <div id="card-fields">
+            <div class="section-label"><span>Card details</span></div>
+            <div class="field">
+              <label for="card-name">Name on card</label>
+              <input id="card-name" name="card_name" type="text" placeholder="e.g. Alex Morgan" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="card-number">Card number</label>
+              <input id="card-number" name="card_number" type="text" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456" autocomplete="off">
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="expiry">Expiry date</label>
+                <input id="expiry" name="expiry" type="text" maxlength="5" placeholder="MM/YY" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="cvv">Security code</label>
+                <input id="cvv" name="cvv" type="password" inputmode="numeric" maxlength="4" placeholder="123" autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email for order updates</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <button class="pay-button" type="submit"><span id="button-text">Pay securely</span><span aria-hidden="true">→</span></button>
+          <p class="fine-print">Please review your order details before confirming your purchase.</p>
+          <div id="confirmation" class="confirmation" role="status" hidden></div>
+        </form>
+      </section>
+
+      <aside class="panel summary-panel">
+        <div class="panel-title"><div><h2>Order summary</h2><p>Your items at a glance</p></div><span class="bag-icon">♡</span></div>
+        <div class="product-row">
+          <div class="product-placeholder"><span>V</span></div>
+          <div class="product-description"><strong>Velora Essentials</strong><span>Everyday collection</span><small>Qty: 1</small></div>
+          <strong class="item-price">MUR 2,200</strong>
+        </div>
+        <div class="summary-line"><span>Subtotal</span><span>MUR 2,200</span></div>
+        <div class="summary-line"><span>Delivery</span><span class="free">FREE</span></div>
+        <div class="summary-line"><span>Tax</span><span>MUR 250</span></div>
+        <div class="summary-total"><span>Total</span><strong>MUR 2,450</strong></div>
+        <div class="summary-note"><span class="note-check">✓</span><p><strong>Thoughtful style, easy checkout.</strong><br>Review your items and total before placing your order.</p></div>
+        <a class="back-link" href="/shop/">← Continue shopping</a>
+      </aside>
+    </div>
+    <footer>© Velora · The Code Collective <span>Made with care</span></footer>
+  </main>
+  <script src="{% static 'payment_app/js/payment.js' %}"></script>
+</body>
+</html>
