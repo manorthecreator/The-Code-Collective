@@ -22,9 +22,9 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin/", include("admin_app.urls")),  # 1. Custom admin dashboard and related routes
+    path("django-admin/", admin.site.urls),     # 2. Default Django admin site
     path("", include("store_app.urls")),
     path("shop/", include("products_app.urls")),
     path("accounts_app/", include("accounts_app.urls")),
-    path("", include("admin_app.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

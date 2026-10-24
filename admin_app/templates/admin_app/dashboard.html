@@ -11,7 +11,7 @@
         <h1>Good day, Admin</h1>
         <p>Here is how Velora is doing today, {{ today|date:"l, j F Y" }}.</p>
     </div>
-    <a href="#" class="adm-btn">
+    <a href="{% url 'admin_app:products' %}" class="adm-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         Add product
     </a>
@@ -81,13 +81,15 @@
     <article class="adm-card">
         <header class="adm-card-head">
             <h2>Top selling products</h2>
-            <a href="#" class="adm-link">View all</a>
+            <a href="{% url 'admin_app:products' %}" class="adm-link">View all</a>
         </header>
         <ul class="adm-top-list">
             {% for p in top_products %}
             <li>
                 <span class="adm-thumb">
-                    <img src="{% static p.image %}" alt="" onerror="this.remove()">
+                    {% if p.image %}
+                        <img src="{% static p.image %}" alt="" onerror="this.remove()">
+                    {% endif %}
                 </span>
                 <div class="adm-top-info">
                     <div class="adm-top-line">
@@ -115,7 +117,7 @@
                 <option value="shipped">Shipped</option>
                 <option value="delivered">Delivered</option>
             </select>
-            <a href="#" class="adm-link">View all</a>
+            <a href="{% url 'admin_app:orders' %}" class="adm-link">View all</a>
         </div>
     </header>
 

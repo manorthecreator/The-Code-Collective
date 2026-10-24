@@ -4,6 +4,7 @@ from . import views
 app_name = 'admin_app'
 
 urlpatterns = [
+    path('', views.dashboard, name='dashboard'),    # Default route for the admin dashboard
     path('dashboard/', views.dashboard, name='dashboard'),
     path('products/', views.products_view, name='products'),
     path('customers/', views.customers_view, name='customers'),

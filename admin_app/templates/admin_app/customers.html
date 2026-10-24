@@ -56,38 +56,46 @@
 <div id="add-modal" style="display: none; position: fixed; inset: 0; background: rgba(51, 32, 26, .5); z-index: 50; place-items: center;">
     <div style="background: var(--paper); padding: 24px; border-radius: 16px; width: 400px; box-shadow: var(--shadow);">
         <h2 style="margin: 0 0 16px; font-size: 1.2rem;">Add Customer</h2>
-        <div style="display: grid; gap: 12px;">
-            <label>
-                <span style="display:block; font-size: .85rem; font-weight: 600;">Name</span>
-                <input type="text" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
-            </label>
-            <label>
-                <span style="display:block; font-size: .85rem; font-weight: 600;">Email</span>
-                <input type="email" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
-            </label>
-            <label>
-                <span style="display:block; font-size: .85rem; font-weight: 600;">Phone Number</span>
-                <input type="text" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
-            </label>
-            <label>
-                <span style="display:block; font-size: .85rem; font-weight: 600;">Street Address</span>
-                <input type="text" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
-            </label>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        
+        <form method="post" action="{% url 'admin_app:customers' %}">
+            {% csrf_token %}
+            
+            <div style="display: grid; gap: 12px;">
                 <label>
-                    <span style="display:block; font-size: .85rem; font-weight: 600;">City</span>
-                    <input type="text" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                    <span style="display:block; font-size: .85rem; font-weight: 600;">Name</span>
+                    <input type="text" name="name" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;" required>
                 </label>
                 <label>
-                    <span style="display:block; font-size: .85rem; font-weight: 600;">Postal Code</span>
-                    <input type="text" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                    <span style="display:block; font-size: .85rem; font-weight: 600;">Email</span>
+                    <input type="email" name="email" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;" required>
                 </label>
+                <label>
+                    <span style="display:block; font-size: .85rem; font-weight: 600;">Phone Number</span>
+                    <input type="text" name="phone" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                </label>
+                <label>
+                    <span style="display:block; font-size: .85rem; font-weight: 600;">Street Address</span>
+                    <input type="text" name="address" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                </label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <label>
+                        <span style="display:block; font-size: .85rem; font-weight: 600;">City</span>
+                        <input type="text" name="city" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                    </label>
+                    <label>
+                        <span style="display:block; font-size: .85rem; font-weight: 600;">Postal Code</span>
+                        <input type="text" name="postal_code" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                    </label>
+                </div>
             </div>
-        </div>
-        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
-            <button id="close-add-modal" style="padding: 8px 16px; border: 1px solid var(--muted); border-radius: 8px; background: transparent; cursor: pointer;">Cancel</button>
-            <button id="save-customer" style="padding: 8px 16px; border: none; border-radius: 8px; background: var(--orange); color: white; cursor: pointer;">Save Customer</button>
-        </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+                <!-- type="button" prevents accidental form submission on Cancel -->
+                <button type="button" id="close-add-modal" style="padding: 8px 16px; border: 1px solid var(--muted); border-radius: 8px; background: transparent; cursor: pointer;">Cancel</button>
+                <!-- type="submit" triggers the form post request -->
+                <button type="submit" id="save-customer" style="padding: 8px 16px; border: none; border-radius: 8px; background: var(--orange); color: white; cursor: pointer;">Save Customer</button>
+            </div>
+        </form>
     </div>
 </div>
 
