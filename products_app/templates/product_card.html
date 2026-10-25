@@ -17,9 +17,9 @@
         <p class="product-price">Rs {{product.price|floatformat:2}}</p>
 
         <div class="product-actions">
-            <button class="btn-viewDetails" type="button" data-id="{{product.productID}}">
+            <a href="{% url 'products:product_detail' product.productID %}" class="btn-viewDetails">
                 View Details
-            </button>
+            </a>
             <button class="btn-cart" type="button" data-id="{{product.productID}}">
                 Add to Cart
             </button>

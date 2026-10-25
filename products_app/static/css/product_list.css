@@ -403,6 +403,9 @@ body{
     font-family: Inter;
     font-style: normal;
     line-height: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .btn-viewDetails{
     background: #FFF;

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from .models import Product,Category,ProductVariant
 
 # Create your views here.
@@ -58,3 +58,19 @@ def product_list(request):
         return render(request, "product_grid.html",context)
 
     return render(request,'product_list.html',context)
+
+
+#Views for Product Details
+def product_detail(request,productID):
+    product=get_object_or_404(Product, pk=productID)
+
+    variants=product.variants.all()
+    colors=variants.values_list('color',flat=True).distinct()
+    sizes=variants.values_list('size',flat=True).distinct()
+
+    context={
+        'product':product,
+        'colors':colors,
+        'sizes':sizes,
+    }
+    return render(request,'product_detail.html',context)

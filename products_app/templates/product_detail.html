@@ -1,0 +1,110 @@
+{% extends 'store_app/base.html' %}
+{% load static %}
+
+{% block title %}Velora | {{ product.name }}{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/product_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+
+<!-- Slick Slider CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="width-container">
+
+    <div class="breadcrumb">
+        <a href="/">Home</a>
+        <svg class="breadcrumb-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6.53061 2.46938L11.5306 7.46938C11.6005 7.53905 11.656 7.62185 11.6939 7.71301C11.7317 7.80417 11.7512 7.90192 11.7512 8.00063C11.7512 8.09934 11.7317 8.19708 11.6939 8.28824C11.656 8.3794 11.6005 8.4622 11.5306 8.53188L6.53061 13.5319C6.38972 13.6728 6.19862 13.7519 5.99936 13.7519C5.80011 13.7519 5.60901 13.6728 5.46811 13.5319C5.32722 13.391 5.24806 13.1999 5.24806 13.0006C5.24806 12.8014 5.32722 12.6103 5.46811 12.4694L9.93749 8L5.46749 3.53063C5.32659 3.38973 5.24744 3.19863 5.24744 2.99938C5.24744 2.80012 5.32659 2.60902 5.46749 2.46813C5.60838 2.32723 5.79948 2.24807 5.99874 2.24807C6.198 2.24807 6.38909 2.32723 6.52999 2.46813L6.53061 2.46938Z" fill="black" fill-opacity="0.6"/>
+        </svg>
+        
+        <a href="{% url 'products:product_list' %}">Shop</a>
+        <svg class="breadcrumb-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6.53061 2.46938L11.5306 7.46938C11.6005 7.53905 11.656 7.62185 11.6939 7.71301C11.7317 7.80417 11.7512 7.90192 11.7512 8.00063C11.7512 8.09934 11.7317 8.19708 11.6939 8.28824C11.656 8.3794 11.6005 8.4622 11.5306 8.53188L6.53061 13.5319C6.38972 13.6728 6.19862 13.7519 5.99936 13.7519C5.80011 13.7519 5.60901 13.6728 5.46811 13.5319C5.32722 13.391 5.24806 13.1999 5.24806 13.0006C5.24806 12.8014 5.32722 12.6103 5.46811 12.4694L9.93749 8L5.46749 3.53063C5.32659 3.38973 5.24744 3.19863 5.24744 2.99938C5.24744 2.80012 5.32659 2.60902 5.46749 2.46813C5.60838 2.32723 5.79948 2.24807 5.99874 2.24807C6.198 2.24807 6.38909 2.32723 6.52999 2.46813L6.53061 2.46938Z" fill="black" fill-opacity="0.6"/>
+        </svg>
+        <span>{{ product.name }}</span>
+    </div>
+
+    <div class="product-detail-layout">
+
+        <!-- Left Side: Images (Slick Slider) -->
+        <div class="product-images-section">
+            <div class="product-thumbnails">
+                <!-- Main Image Thumbnail -->
+                <div><img src="{{ product.image.url }}" alt="{{ product.name }}"></div>
+                <!-- Gallery Images Thumbnails -->
+                {% for img in product.gallery_images.all %}
+                    <div><img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}"></div>
+                {%endfor%}
+            </div>
+
+            <!-- Main Image Slider -->
+            <div class="main-image-container product-main-slider">
+                <!-- Main Image -->
+                <div><img src="{{ product.image.url }}" alt="{{ product.name }}"></div>
+                <!-- Gallery Images -->
+                {% for img in product.gallery_images.all %}
+                    <div><img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}"></div>
+                {%endfor%}
+            </div>
+            <button class="wishlist-btn-detail">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E1E1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+        </div>
+        <!-- Right Side: Product Info -->
+        <div class="product-info-section">
+            <h1 class=detail-title>{{product.name}}</h1>
+            <p class="detail-price">Rs {{product.price | floatformat:2}}</p>
+            
+            <p class="detail-desc-short">
+                {{product.description}}
+            </p>
+            <hr class="divider">
+            <!--Color Selector-->
+            {%if colors%}
+            <div class="selector-group">
+                <span class="selector-label">Color : </span>
+                <div class="color-options">
+                    {%for color in colors%}
+                    <button class="color-swatch {% if forloop.first %}active{%endif%}" data-color="{{color}}" style="background-color: {{color}};" title="{{color}}"></button>
+                    {%endfor%}
+                </div>
+            </div>
+            {%endif%}
+            
+            <!-- Size Selector -->
+            {% if sizes %}
+            <div class="selector-group">
+                <span class="selector-label">Size : </span>
+                <div class="size-options">
+                    {%for size in sizes%}
+                        <button class="size-box {% if forloop.first %}active{% endif %}" data-size="{{ size }}">{{ size }}</button>
+                    {%endfor%}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Quantity Selector -->
+            <div class="selector-group qty-group">
+                <span class="selector-label">Quantity :</span>
+                <div class="qty-selector">
+                    <button type="button" class="qty-btn" id="qtyMinus">-</button>
+                    <input type="number" id="qtyInput" value="1" readonly>  {% comment %}readonly is currently for testing only,will remove soon if needed {% endcomment %}
+                    <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                </div>
+            </div>
+
+            
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_detail.js' %}"></script>
+{% endblock %}
