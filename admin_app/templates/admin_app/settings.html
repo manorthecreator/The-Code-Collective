@@ -1,0 +1,215 @@
+{% extends 'admin_app/base_admin.html' %}
+
+{% block title %}Settings{% endblock %}
+{% block nav_set %}is-active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .settings-subnav {
+        display: flex;
+        gap: 24px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 24px;
+        padding-bottom: 8px;
+    }
+    .settings-tab-btn {
+        background: none;
+        border: none;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: all .15s ease;
+    }
+    .settings-tab-btn.is-active {
+        background: var(--cream);
+        color: var(--brown-900);
+    }
+    .settings-form-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+    }
+    .settings-field-group {
+        display: grid;
+        gap: 16px;
+    }
+    .settings-label {
+        display: block;
+        font-size: .9rem;
+        font-weight: 600;
+        color: var(--brown-900);
+        margin-bottom: 6px;
+    }
+    .settings-input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--white);
+        font-size: .95rem;
+        color: var(--ink);
+    }
+    .settings-input:focus {
+        border-color: var(--orange);
+        outline: none;
+    }
+    .logo-dropzone {
+        border: 2px dashed var(--line);
+        border-radius: 12px;
+        height: 140px;
+        display: grid;
+        place-items: center;
+        background: var(--paper);
+        color: var(--muted);
+        cursor: pointer;
+    }
+    .settings-panel {
+        display: none;
+    }
+    .settings-panel.is-active {
+        display: block;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Sub Navigation Tabs -->
+<nav class="settings-subnav">
+    <button class="settings-tab-btn is-active" data-tab="general">General</button>
+    <button class="settings-tab-btn" data-tab="store-details">Store Details</button>
+    <button class="settings-tab-btn" data-tab="payments">Payments</button>
+    <button class="settings-tab-btn" data-tab="shipping">Shipping</button>
+    <button class="settings-tab-btn" data-tab="security">Security</button>
+</nav>
+
+<!-- Tab 1: General Settings -->
+<div class="settings-panel is-active" id="tab-general">
+    <section class="adm-card">
+        <header class="adm-card-head">
+            <h2>General Settings</h2>
+        </header>
+
+        <form method="post" action="" class="settings-form-grid">
+            {% csrf_token %}
+            <div class="settings-field-group">
+                <div>
+                    <label class="settings-label">Store Name</label>
+                    <input type="text" class="settings-input" value="{{ settings.store_name }}">
+                </div>
+
+                <div>
+                    <label class="settings-label">Store Email</label>
+                    <input type="email" class="settings-input" value="{{ settings.store_email }}">
+                </div>
+
+                <div>
+                    <label class="settings-label">Phone</label>
+                    <input type="text" class="settings-input" value="{{ settings.phone }}">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 16px;">
+                    <div>
+                        <label class="settings-label">Currency</label>
+                        <input type="text" class="settings-input" value="{{ settings.currency }}">
+                    </div>
+                    <div>
+                        <label class="settings-label">Timezone</label>
+                        <input type="text" class="settings-input" value="{{ settings.timezone }}">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="settings-label">Store Logo</label>
+                <div class="logo-dropzone">
+                    <div style="text-align: center;">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" style="margin: 0 auto 8px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        <span style="font-size: .85rem;">Upload Logo</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+
+<!-- Tab 2: Store Details -->
+<div class="settings-panel" id="tab-store-details">
+    <section class="adm-card">
+        <header class="adm-card-head">
+            <h2>Store Details</h2>
+        </header>
+
+        <form method="post" action="" class="settings-field-group" style="max-width: 720px;">
+            {% csrf_token %}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div>
+                    <label class="settings-label">Store Name</label>
+                    <input type="text" class="settings-input" value="{{ settings.store_name }}">
+                </div>
+                <div>
+                    <label class="settings-label">Legal Business Name</label>
+                    <input type="text" class="settings-input" value="{{ settings.legal_name }}">
+                </div>
+            </div>
+
+            <div>
+                <label class="settings-label">Store Description</label>
+                <textarea class="settings-input" rows="3" style="resize: vertical;">{{ settings.description }}</textarea>
+            </div>
+
+            <div>
+                <label class="settings-label">Address</label>
+                <input type="text" class="settings-input" value="{{ settings.address }}">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div>
+                    <label class="settings-label">City</label>
+                    <input type="text" class="settings-input" value="{{ settings.city }}">
+                </div>
+                <div>
+                    <label class="settings-label">State / Province</label>
+                    <input type="text" class="settings-input" value="{{ settings.state }}">
+                </div>
+            </div>
+
+            <div style="margin-top: 12px; display: flex; justify-content: flex-end;">
+                <button type="submit" class="adm-btn" style="background: var(--orange); color: white;">Save Changes</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<!-- Placeholder panels for other tabs -->
+<div class="settings-panel" id="tab-payments">
+    <section class="adm-card"><h2>Payment Gateway Settings</h2><p class="adm-sub">Manage payment providers and options.</p></section>
+</div>
+<div class="settings-panel" id="tab-shipping">
+    <section class="adm-card"><h2>Shipping & Delivery Settings</h2><p class="adm-sub">Manage delivery zones and fee structures.</p></section>
+</div>
+<div class="settings-panel" id="tab-security">
+    <section class="adm-card"><h2>Security & Password</h2><p class="adm-sub">Manage admin security permissions and passwords.</p></section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const tabs = document.querySelectorAll('.settings-tab-btn');
+    const panels = document.querySelectorAll('.settings-panel');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.tab;
+
+            tabs.forEach(t => t.classList.remove('is-active'));
+            panels.forEach(p => p.classList.remove('is-active'));
+
+            tab.classList.add('is-active');
+            document.getElementById(`tab-${target}`).classList.add('is-active');
+        });
+    });
+</script>
+{% endblock %}
