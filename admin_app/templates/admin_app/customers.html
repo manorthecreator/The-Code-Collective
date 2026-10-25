@@ -1,0 +1,136 @@
+{% extends 'admin_app/base_admin.html' %}
+
+{% block title %}Customers{% endblock %}
+{% block nav_cust %}is-active{% endblock %}
+
+{% block content %}
+<section class="adm-card">
+    <header class="adm-card-head" style="align-items: flex-end;">
+        <div style="display: flex; gap: 16px;">
+            <div>
+                <label style="display: block; font-size: .8rem; color: var(--muted); margin-bottom: 4px;">Status</label>
+                <input type="text" value="All" style="padding: 7px 12px; border: 1px solid var(--line); border-radius: 10px; width: 100px;">
+            </div>
+            <div>
+                <label style="display: block; font-size: .8rem; color: var(--muted); margin-bottom: 4px;">Date Range</label>
+                <input type="text" value="Aug 12 - Aug 23, 2026" style="padding: 7px 12px; border: 1px solid var(--line); border-radius: 10px; width: 180px;">
+            </div>
+        </div>
+        <div class="adm-head-tools">
+            <button class="adm-btn" style="background: #f2b36b; color: var(--brown-900);">Export</button>
+            <button class="adm-btn" id="open-add-modal" style="background: var(--brown-700);">Add Customer</button>
+        </div>
+    </header>
+
+    <div class="adm-table-wrap">
+        <table class="adm-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Orders</th>
+                    <th>Total spent</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in customers %}
+                <tr>
+                    <td class="adm-id">{{ c.name }}</td>
+                    <td><a href="mailto:{{ c.email }}" style="text-decoration: underline; color: var(--ink);">{{ c.email }}</a></td>
+                    <td>{{ c.orders }}</td>
+                    <td>Rs {{ c.spent }}</td>
+                    <td style="text-align: right;">
+                        <button style="border:none; background:none; cursor:pointer;">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Add Customer Modal -->
+<div id="add-modal" style="display: none; position: fixed; inset: 0; background: rgba(51, 32, 26, .5); z-index: 50; place-items: center;">
+    <div style="background: var(--paper); padding: 24px; border-radius: 16px; width: 400px; box-shadow: var(--shadow);">
+        <h2 style="margin: 0 0 16px; font-size: 1.2rem;">Add Customer</h2>
+        
+        <form method="post" action="{% url 'admin_app:customers' %}">
+            {% csrf_token %}
+            
+            <div style="display: grid; gap: 12px;">
+                <label>
+                    <span style="display:block; font-size: .85rem; font-weight: 600;">Name</span>
+                    <input type="text" name="name" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;" required>
+                </label>
+                <label>
+                    <span style="display:block; font-size: .85rem; font-weight: 600;">Email</span>
+                    <input type="email" name="email" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;" required>
+                </label>
+                <label>
+                    <span style="display:block; font-size: .85rem; font-weight: 600;">Phone Number</span>
+                    <input type="text" name="phone" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                </label>
+                <label>
+                    <span style="display:block; font-size: .85rem; font-weight: 600;">Street Address</span>
+                    <input type="text" name="address" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                </label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <label>
+                        <span style="display:block; font-size: .85rem; font-weight: 600;">City</span>
+                        <input type="text" name="city" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                    </label>
+                    <label>
+                        <span style="display:block; font-size: .85rem; font-weight: 600;">Postal Code</span>
+                        <input type="text" name="postal_code" style="width: 100%; padding: 8px; border: 1px solid var(--line); background: var(--cream); border-radius: 6px;">
+                    </label>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+                <!-- type="button" prevents accidental form submission on Cancel -->
+                <button type="button" id="close-add-modal" style="padding: 8px 16px; border: 1px solid var(--muted); border-radius: 8px; background: transparent; cursor: pointer;">Cancel</button>
+                <!-- type="submit" triggers the form post request -->
+                <button type="submit" id="save-customer" style="padding: 8px 16px; border: none; border-radius: 8px; background: var(--orange); color: white; cursor: pointer;">Save Customer</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div id="success-modal" style="display: none; position: fixed; inset: 0; background: rgba(51, 32, 26, .5); z-index: 60; place-items: center;">
+    <div style="background: var(--white); padding: 32px; border-radius: 16px; width: 320px; text-align: center; box-shadow: var(--shadow);">
+        <div style="width: 64px; height: 64px; border-radius: 50%; border: 3px solid var(--green); color: var(--green); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3 style="margin: 0 0 24px; font-size: 1.1rem; color: var(--ink);">Customer have been<br>successfully Added.</h3>
+        <button id="close-success-modal" style="width: 100%; padding: 10px; border: none; border-radius: 8px; background: var(--orange); color: white; font-weight: 600; cursor: pointer;">OK</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const addModal = document.getElementById('add-modal');
+    const successModal = document.getElementById('success-modal');
+
+    document.getElementById('open-add-modal').addEventListener('click', () => {
+        addModal.style.display = 'grid';
+    });
+
+    document.getElementById('close-add-modal').addEventListener('click', () => {
+        addModal.style.display = 'none';
+    });
+
+    document.getElementById('save-customer').addEventListener('click', () => {
+        addModal.style.display = 'none';
+        successModal.style.display = 'grid';
+    });
+
+    document.getElementById('close-success-modal').addEventListener('click', () => {
+        successModal.style.display = 'none';
+    });
+</script>
+{% endblock %}
