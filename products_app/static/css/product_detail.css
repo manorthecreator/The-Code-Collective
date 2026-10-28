@@ -2,7 +2,8 @@
     display: flex;
     gap: 34px;
     margin-top: 27px;
-    margin-bottom: 102px;
+    margin-bottom: 20px;
+    align-items: flex-start;
 }
 
 .product-images-section {
@@ -181,4 +182,194 @@
     border-radius: 6px;
     border: 1px solid #D8D0C8;
     background: #FFF;
+    overflow: hidden;
+    width:fit-content
+}
+.qty-btn{
+    width: 36px;
+    height: 36px;
+    background: #FFF;
+    border:none;
+    font-size:20px;
+    cursor: pointer;
+    color: #000;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    transition: background 0.2s ease;
+}
+.qty-btn:hover {
+    background: #F9F9F9;
+}
+#qtyInput {
+    width:52px;
+    height:42px;
+    border:none;
+    text-align: center;
+    color: #000;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    outline: none;
+    background: transparent;
+}
+/* Hide arrows in Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.detail-actions{
+    display: flex;
+    gap:15px;
+    margin:15px 0 30px 0;
+}
+.btn-add-cart-large,
+.btn-wishlist-large{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:8px;
+    padding:12px 24px;
+    border-radius:6px;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-add-cart-large{
+    background: #FF9934;
+    color: #FFF;
+    flex:1;
+    border: 1.5px solid #FF9934;
+}
+.btn-add-cart-large:hover {
+    background: #FFF;
+    color: #FF9934;
+}
+.btn-wishlist-large {
+    background: #FFF;
+    color: #2F211C;
+    flex:1;
+    border: 1.5px solid #6B5145;
+}
+.btn-wishlist-large:hover {
+    background: #2F211C;
+    color: #FFF;
+}
+
+.trust-badges {
+    display: flex;
+    gap: 0;
+}
+.badge {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding:0 20px;
+}
+/* This targets every badge except the first one to add the vertical line */
+.badge:not(:first-child) {
+    border-left: 1px solid #E0E0E0;
+}
+/* Remove the left padding from the very first badge so it aligns left */
+.badge:first-child {
+    padding-left: 0;
+}
+/* Remove the right padding from the very last badge so it aligns right */
+.badge:last-child {
+    padding-right: 0;
+}
+
+.badge svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+.badge div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.badge strong {
+    font-family: Inter;
+    font-size: 11px;
+    font-weight: 600;
+    color: #1E1E1E;
+    text-transform: uppercase;
+}
+.badge span {
+    font-family: Inter;
+    font-size: 10px;
+    color: #717171;
+}
+
+.product-tabs {
+    margin-top: 21px;
+    margin-bottom: 100px;
+}
+.tab-headers{
+    display:flex;
+    gap:57px;
+    margin-bottom:12px;
+    border-bottom: 1px solid #D8D0C8;
+}
+.tab-btn{
+    background: transparent;
+    border: none;
+    color: #2F211C;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    padding: 5px 0;
+    position:relative;
+}
+.tab-btn.active {
+    font-weight: 600;
+}
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #000;
+}
+.tab-content p {
+    color: #2F211C;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.specs-table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    font-family: Poppins;
+    font-size: 14px;
+    color: #2F211C;
+}
+.specs-table th,
+.specs-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #E2E2E2;
+    text-align: left;
+}
+.specs-table th {
+    font-weight: 600;
+    color: #1E1E1E;
+    width: 35%;
+    background-color: #F9F9F9;
 }
