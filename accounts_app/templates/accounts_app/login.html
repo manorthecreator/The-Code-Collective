@@ -10,9 +10,16 @@
     Please login to your account
 </p>
 
+
 <form class="login-form" method="POST" action="{% url 'accounts_app:login' %}">
 
     {% csrf_token %}
+
+    {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+    {% endif %}
 
     <div class="input-group">
         <label for="email">Email Address</label>

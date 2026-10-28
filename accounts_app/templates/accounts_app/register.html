@@ -8,37 +8,42 @@
     Join Velora and elevate your shopping experience
 </p>
 
+
 <form class="register-form" method="POST" action="{% url 'accounts_app:register' %}">
 
     {% csrf_token %}
 
-    
-<div class="name-row">
+    {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+    {% endif %}
 
-    <div class="input-group">
-        <label for="first_name">First Name</label>
-        <input
-            type="text"
-            id="first_name"
-            name="first_name"
-            placeholder="Enter your first name"
-            required
-        >
+    <div class="name-row">
+
+        <div class="input-group">
+            <label for="first_name">First Name</label>
+            <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                placeholder="Enter your first name"
+                required
+            >
+        </div>
+
+        <div class="input-group">
+            <label for="last_name">Last Name</label>
+            <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                placeholder="Enter your last name"
+                required
+            >
+        </div>
+
     </div>
-
-    <div class="input-group">
-        <label for="last_name">Last Name</label>
-        <input
-            type="text"
-            id="last_name"
-            name="last_name"
-            placeholder="Enter your last name"
-            required
-        >
-    </div>
-
-</div>
-
 
     <div class="input-group">
         <label for="email">Email Address</label>
@@ -76,6 +81,7 @@
     <button type="submit">Create Account</button>
 
 </form>
+
 
 <!-- OR DIVIDER -->
 <div class="or-divider">

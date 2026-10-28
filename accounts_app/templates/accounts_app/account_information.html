@@ -1,4 +1,3 @@
-
 {% extends "store_app/base.html" %}
 {% load static %}
 
@@ -9,70 +8,109 @@
 {% endblock %}
 
 {% block content %}
+
 <section class="account-page">
 
     <div class="account-heading">
         <h1>My Account</h1>
-        <p>Manage your personal information.</p>
+        <p>Manage your personal information and password.</p>
     </div>
 
-    <div class="account-layout">
+    <div class="account-content">
 
-        <aside class="account-sidebar">
-            <a href="#account-details" class="sidebar-link active">
-                Account Details
-            </a>
-        </aside>
+        <form method="POST"
+              action="{% url 'accounts_app:account' %}"
+              class="account-form">
 
-        <div class="account-content" id="account-details">
-
-           <form method="POST" action="{% url 'accounts_app:account' %}" class="account-form">
             {% csrf_token %}
 
-                <div class="name-row">
-                    <div class="form-group">
-                        <label for="first_name">First Name</label>
-                        <input type="text" id="first_name"
-                               name="first_name"
-                               value="{{ request.user.first_name }}"
-                               required>
-                    </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            {% endif %}
 
-                    <div class="form-group">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" id="last_name"
-                               name="last_name"
-                               value="{{ request.user.last_name }}"
-                               required>
-                    </div>
+            <div class="name-row">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        value="{{ request.user.first_name }}"
+                        readonly
+                    >
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email"
-                           value="{{ request.user.email }}" required>
+                    <label for="last_name">Last Name</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        value="{{ request.user.last_name }}"
+                        readonly
+                    >
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password"
-                           placeholder="Enter a new password ">
-                </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    value="{{ request.user.email }}"
+                    readonly
+                >
+            </div>
 
-                <div class="account-actions">
-                    <button type="submit" class="save-button">
-                        Save Changes
-                    </button>
+            <div class="form-group">
+                <label for="current_password">Current Password</label>
+                <input
+                    type="password"
+                    id="current_password"
+                    name="current_password"
+                    placeholder="Enter your current password"
+                    required
+                >
+            </div>
 
-                    <button type="reset" class="cancel-button">
-                        Cancel
-                    </button>
-                </div>
+            <div class="form-group">
+                <label for="new_password">New Password</label>
+                <input
+                    type="password"
+                    id="new_password"
+                    name="new_password"
+                    placeholder="Enter your new password"
+                    required
+                >
+            </div>
 
-            </form>
+            <div class="form-group">
+                <label for="confirm_password">Confirm New Password</label>
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    placeholder="Confirm your new password"
+                    required
+                >
+            </div>
 
-        </div>
+            <div class="account-actions">
+                <button type="submit" class="save-button">
+                    Update Password
+                </button>
+
+                <button type="reset" class="cancel-button">
+                    Cancel
+                </button>
+            </div>
+
+        </form>
+
     </div>
 
 </section>
+
 {% endblock %}
