@@ -181,7 +181,69 @@
             </table>
         </div>
         <div class="tab-content" id="reviews" style="display: none;">
-            <p>No reviews yet. Be the first to review this product!</p>
+            <div class="review-action-header">
+                <h3>Customer Reviews</h3>
+                <button type="button" class="btn-toggle-review-form" id="toggleReviewForm">
+                    Write a Review
+                </button>
+            </div>
+
+            <div class="review-form-container" id="reviewFormContainer" style="display: none;">
+                <form id="reviewForm" data-url="{% url 'reviews_app:submit_review' product.productID %}">
+                    {% csrf_token %}
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name</label>
+                            {{ review_form.name }}
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            {{ review_form.email }}
+                        </div>
+                        <div class="form-group">
+                            <label>Rating</label>
+                            {{ review_form.rating }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Review</label>
+                        {{ review_form.comment }}
+                    </div>
+
+                    <button type="submit" class="btn-submit-review">Submit Review</button>
+                </form>
+            </div>
+
+            <div class="reviews-list" id="reviewsList">
+                {% for review in reviews %}
+                    <div class="review-card">
+                        <div class="review-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="12" fill="#4A3028"/>
+                                <circle cx="12" cy="8" r="4" fill="#FFFFFF"/>
+                                <path d="M4 20C4 16.6863 6.68629 14 10 14H14C17.3137 14 20 16.6863 20 20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="review-content">
+                            <h4 class="review-name">{{ review.name }}</h4>
+                            <div class="review-stars">
+                                {% for i in "12345"|make_list %}
+                                    {% if forloop.counter <= review.rating %}
+                                        ★
+                                    {% else %}
+                                        ☆
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <p class="review-text">{{ review.comment }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="no-reviews-text">No reviews yet. Be the first to review this product!</p>
+                {% endfor %}
+            </div>
+
         </div>
     </div>
 
