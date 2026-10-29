@@ -34,10 +34,23 @@ class Product(models.Model):
         related_name='products'
     )
 
+    @property
+    def get_main_image(self):
+        first_gallery_image=self.gallery_images.first()
+        if first_gallery_image:
+            return first_gallery_image.image.url
+        return self.image.url
+
     def __str__(self):
         return self.name
 
+class ProductImage(models.Model):
+    product=models.ForeignKey(Product,related_name='gallery_images',on_delete=models.CASCADE)
+    image=models.ImageField(upload_to='products/gallery/')
+    alt_text=models.CharField(max_length=100,blank=True,null=True)
 
+    def __str__(self):
+        return f"Gallery image for {self.product.name}"
 class ProductVariant(models.Model):
     variantID = models.AutoField(primary_key=True)
 
