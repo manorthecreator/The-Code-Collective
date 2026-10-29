@@ -1,0 +1,116 @@
+{% extends "store_app/base.html" %}
+{% load static %}
+
+{% block title %}My Account | Velora{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="account-page">
+
+    <div class="account-heading">
+        <h1>My Account</h1>
+        <p>Manage your personal information and password.</p>
+    </div>
+
+    <div class="account-content">
+
+        <form method="POST"
+              action="{% url 'accounts_app:account' %}"
+              class="account-form">
+
+            {% csrf_token %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+
+            <div class="name-row">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        value="{{ request.user.first_name }}"
+                        readonly
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        value="{{ request.user.last_name }}"
+                        readonly
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    value="{{ request.user.email }}"
+                    readonly
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="current_password">Current Password</label>
+                <input
+                    type="password"
+                    id="current_password"
+                    name="current_password"
+                    placeholder="Enter your current password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="new_password">New Password</label>
+                <input
+                    type="password"
+                    id="new_password"
+                    name="new_password"
+                    placeholder="Enter your new password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm New Password</label>
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    placeholder="Confirm your new password"
+                    required
+                >
+            </div>
+
+            <div class="account-actions">
+                <button type="submit" class="save-button">
+                    Update Password
+                </button>
+
+                <button type="reset" class="cancel-button">
+                    Cancel
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}
