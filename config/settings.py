@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'store_app',
     'admin_app',
     'products_app',
+    'reviews_app',
+    'orders_app',
 ]
 
 

@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from .models import Product,Category,ProductVariant
 
 # Create your views here.
+from django.db.models import Avg
+from reviews_app.forms import ReviewForm
 
 def product_list(request):
     products = Product.objects.filter(status='Available')
@@ -58,3 +60,25 @@ def product_list(request):
         return render(request, "product_grid.html",context)
 
     return render(request,'product_list.html',context)
+
+
+#Views for Product Details
+def product_detail(request,productID):
+    product=get_object_or_404(Product, pk=productID)
+
+    variants=product.variants.all()
+    colors=variants.values_list('color',flat=True).distinct()
+    sizes=variants.values_list('size',flat=True).distinct()
+
+    reviews = product.reviews.all().order_by('-created_at')
+    avg_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+
+    context={
+        'product':product,
+        'colors':colors,
+        'sizes':sizes,
+        'reviews': reviews,
+        'review_form': ReviewForm(),
+        'avg_rating': round(avg_rating, 1),
+    }
+    return render(request,'product_detail.html',context)

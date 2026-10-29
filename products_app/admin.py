@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, ProductVariant
+from .models import Product, Category, ProductVariant, ProductImage
 
 # Register your models here.
 
@@ -8,7 +8,9 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('categoryID', 'name', 'description')
     search_fields = ('name',)
 
-
+class ProductImageInline(admin.TabularInline):
+    model=ProductImage
+    extra=3 #Shows 3 empty upload boxes by default
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
@@ -29,6 +31,7 @@ class ProductAdmin(admin.ModelAdmin):
         'description'
     )
 
+    inlines=[ProductImageInline]
 
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
