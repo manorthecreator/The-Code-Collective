@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velora - Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Italiana&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+   <main class="login-container">
+
+    <!-- Left side -->
+    <section class="login-image">
+        <img src="{% static 'images/login_image.png' %}" alt="Velora login">
+    </section>
+
+    <!-- Right side -->
+    <section class="login-content">
+
+        <p class="logo">Velora</p>
+
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Please login to your account</p>
+
+        <form class="login-form">
+
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <div class="forgot-password">
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <div class="or-divider">
+            <span></span>
+            <p>Or login with</p>
+            <span></span>
+        </div>
+
+        <div class="social-login">
+            <button type="button">
+            <i class="fa-brands fa-google"></i>
+            Google
+            </button>
+
+            <button type="button">
+            <i class="fa-brands fa-facebook-f"></i>
+            Facebook
+            </button>
+        </div>
+
+        <p class="signup-text">
+            Don't have an account?
+            <a href="#">Sign Up</a>
+        </p>
+
+    </section>
+
+</main>
+
+</body>
+</html>

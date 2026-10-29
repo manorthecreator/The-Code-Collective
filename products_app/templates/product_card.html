@@ -1,0 +1,31 @@
+{% load static %}
+<div class=product-card>
+
+    <div class="product-image">
+        <img src="{{product.image.url}}" alt="{{product.name}}">
+        <button class="wishlist-btn" type="button" data-id="{{product.productID}}" aria-label="Add to wishlist">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="product-info">
+        <h3 class="product-name">{{product.name}}</h3>
+        <p class="product-price">Rs {{product.price|floatformat:2}}</p>
+
+        <div class="product-actions">
+            <a href="{% url 'products:product_detail' product.productID %}" class="btn-viewDetails">
+                View Details
+            </a>
+            <form method="post" action="{% url 'orders_app:add_to_cart' product.productID %}">
+                {% csrf_token %}
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="next" value="{% url 'orders_app:cart' %}">
+                <button class="btn-cart" type="submit">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+</div>

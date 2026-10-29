@@ -1,0 +1,230 @@
+{% extends 'admin_app/base_admin.html' %}
+
+{% block title %}Analytics{% endblock %}
+{% block nav_stat %}is-active{% endblock %}
+
+{% block extra_css %}
+<style>
+    .analytics-top-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+    .analytics-grid-2 {
+        display: grid;
+        grid-template-columns: 1.8fr 1.2fr;
+        gap: 20px;
+    }
+    .analytics-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+    .donut-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+    .donut-chart {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: conic-gradient(
+            #985922 0% 51.6%,
+            #d3a172 51.6% 80.8%,
+            #e8d5c4 80.8% 100%
+        );
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+    }
+    .donut-hole {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--white);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        font-size: .75rem;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+    .progress-bar-bg {
+        height: 8px;
+        background: var(--cream);
+        border-radius: 99px;
+        overflow: hidden;
+        margin-top: 6px;
+    }
+    .progress-bar-fill {
+        appearance: none;
+        display: block;
+        width: 100%;
+        height: 8px;
+        border: 0;
+        background: transparent;
+        border-radius: 99px;
+    }
+    .progress-bar-fill::-webkit-progress-bar {
+        background: transparent;
+    }
+    .progress-bar-fill::-webkit-progress-value,
+    .progress-bar-fill::-moz-progress-bar {
+        background: #c9823b;
+        border-radius: 99px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Top Stats Row -->
+<section class="analytics-top-stats">
+    <article class="adm-stat">
+        <span class="adm-stat-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line></svg>
+        </span>
+        <div>
+            <p class="adm-stat-label">Total Revenue</p>
+            <p class="adm-stat-value"><small>Rs</small> {{ stats.revenue }}</p>
+        </div>
+    </article>
+
+    <article class="adm-stat">
+        <span class="adm-stat-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+        </span>
+        <div>
+            <p class="adm-stat-label">Orders</p>
+            <p class="adm-stat-value">{{ stats.orders }}</p>
+        </div>
+    </article>
+
+    <article class="adm-stat">
+        <span class="adm-stat-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+        </span>
+        <div>
+            <p class="adm-stat-label">Average Order Value</p>
+            <p class="adm-stat-value"><small>Rs</small> {{ stats.avg_order }}</p>
+        </div>
+    </article>
+
+    <article class="adm-stat">
+        <span class="adm-stat-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+        </span>
+        <div>
+            <p class="adm-stat-label">Sales Increase</p>
+            <p class="adm-stat-value">{{ stats.increase }}</p>
+        </div>
+    </article>
+</section>
+
+<!-- Middle Row: Sales Overview & Revenue by Category -->
+<section class="analytics-grid-2">
+    <article class="adm-card">
+        <header class="adm-card-head">
+            <h2>Sales Overview</h2>
+            <select style="padding: 4px 10px; border: 1px solid var(--line); border-radius: 8px; font-size: .8rem;">
+                <option>Daily</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
+            </select>
+        </header>
+        <div style="height: 200px; display: flex; align-items: flex-end; gap: 12px; padding-top: 20px;">
+            <svg viewBox="0 0 500 150" style="width: 100%; height: 100%;">
+                <path d="M 0 100 Q 50 80 100 90 T 200 50 T 300 70 T 400 30 T 500 40 L 500 150 L 0 150 Z" fill="rgba(224, 138, 52, 0.15)"></path>
+                <path d="M 0 100 Q 50 80 100 90 T 200 50 T 300 70 T 400 30 T 500 40" fill="none" stroke="var(--orange)" stroke-width="3"></path>
+            </svg>
+        </div>
+    </article>
+
+    <article class="adm-card">
+        <header class="adm-card-head">
+            <h2>Revenue by Category</h2>
+        </header>
+        <div class="donut-container">
+            <div class="donut-chart">
+                <div class="donut-hole">
+                    Rs 248,760.50<br><span style="font-size: .68rem; color: var(--muted); font-weight: 400;">Total</span>
+                </div>
+            </div>
+            <div style="flex: 1; display: grid; gap: 10px;">
+                {% for c in categories %}
+                <div style="font-size: .82rem;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span><svg width="8" height="8" aria-hidden="true" style="margin-right:6px; vertical-align:middle;"><circle cx="4" cy="4" r="4" fill="{{ c.color }}"></circle></svg>{{ c.name }}</span>
+                        <strong>Rs {{ c.amount }}</strong>
+                    </div>
+                    <span style="color: var(--muted); font-size: .75rem; display: block; text-align: right;">{{ c.percentage }}%</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </article>
+</section>
+
+<!-- Bottom Row: Top Products, Traffic Sources & Customer Insights -->
+<section class="analytics-grid-3">
+    <!-- Top Selling Products -->
+    <article class="adm-card">
+        <header class="adm-card-head">
+            <h2>Top Selling Products</h2>
+        </header>
+        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 14px;">
+            {% for item in top_products %}
+            <li style="display: flex; gap: 12px; align-items: center;">
+                <div style="width: 44px; height: 44px; background: var(--cream); border-radius: 8px; flex-shrink: 0;"></div>
+                <div>
+                    <strong style="display: block; font-size: .9rem;">{{ item.name }}</strong>
+                    <small style="color: var(--muted);">{{ item.category }}</small>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </article>
+
+    <!-- Traffic Sources -->
+    <article class="adm-card">
+        <header class="adm-card-head">
+            <h2>Traffic Sources</h2>
+        </header>
+        <div style="display: grid; gap: 12px;">
+            {% for ts in traffic_sources %}
+            <div>
+                <div style="display: flex; justify-content: space-between; font-size: .82rem;">
+                    <span>{{ ts.source }}</span>
+                    <strong>{{ ts.percentage }}%</strong>
+                </div>
+                <div class="progress-bar-bg">
+                    <progress class="progress-bar-fill" max="100" value="{{ ts.percentage }}">{{ ts.percentage }}%</progress>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </article>
+
+    <!-- Customer Insights -->
+    <article class="adm-card">
+        <header class="adm-card-head">
+            <h2>Customer Insights</h2>
+        </header>
+        <div style="display: grid; gap: 16px;">
+            <div>
+                <span style="display: block; font-size: .8rem; color: var(--muted);">Total Customers</span>
+                <strong style="font-size: 1.6rem; color: var(--brown-900);">{{ customer_insights.total }}</strong>
+            </div>
+            <div style="border-top: 1px solid var(--line); padding-top: 12px;">
+                <span style="display: block; font-size: .8rem; color: var(--muted);">New Customers</span>
+                <strong style="font-size: 1.1rem; color: var(--green);">{{ customer_insights.new }}</strong>
+            </div>
+            <div style="border-top: 1px solid var(--line); padding-top: 12px;">
+                <span style="display: block; font-size: .8rem; color: var(--muted);">Returning Customers</span>
+                <strong style="font-size: 1.1rem; color: var(--brown-700);">{{ customer_insights.returning }}</strong>
+            </div>
+        </div>
+    </article>
+</section>
+{% endblock %}

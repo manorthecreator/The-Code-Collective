@@ -1,0 +1,136 @@
+{% extends 'store_app/base.html' %}
+{% load static %}
+
+{% block title %}Velora | Shop{% endblock %}
+
+{% block extra_head %} 
+<link rel="stylesheet" href="{% static 'css/product_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="width-container">
+    <div class="breadcrumb">
+        <a href="/">Home</a>
+        <svg class="breadcrumb-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6.53061 2.46938L11.5306 7.46938C11.6005 7.53905 11.656 7.62185 11.6939 7.71301C11.7317 7.80417 11.7512 7.90192 11.7512 8.00063C11.7512 8.09934 11.7317 8.19708 11.6939 8.28824C11.656 8.3794 11.6005 8.4622 11.5306 8.53188L6.53061 13.5319C6.38972 13.6728 6.19862 13.7519 5.99936 13.7519C5.80011 13.7519 5.60901 13.6728 5.46811 13.5319C5.32722 13.391 5.24806 13.1999 5.24806 13.0006C5.24806 12.8014 5.32722 12.6103 5.46811 12.4694L9.93749 8L5.46749 3.53063C5.32659 3.38973 5.24744 3.19863 5.24744 2.99938C5.24744 2.80012 5.32659 2.60902 5.46749 2.46813C5.60838 2.32723 5.79948 2.24807 5.99874 2.24807C6.198 2.24807 6.38909 2.32723 6.52999 2.46813L6.53061 2.46938Z" fill="black" fill-opacity="0.6"/>
+        </svg>
+        <span>Shop</span>
+    </div>
+
+    <h1 class="shop-title">Shop</h1>
+    <p class="shop-subtitle">Discover our latest collection of timeless pieces.</p>
+</div>
+
+<div class="width-container shop-layout">
+    <aside class="sidebar" id="filterSidebar">
+
+        <div class="filter-block" data-filter="category">
+
+            <div class="filter-header">
+                <h3>Categories</h3>
+                <button class="collapse-btn" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 12.5L10 7.5L5 12.5" stroke="#1E1E1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <ul class="category-list">
+                <li>
+                    <label class="radio-row">
+                        <input type="radio" name="category" value="all"
+                            {% if not request.GET.category or request.GET.category == 'all' %}
+                                checked
+                            {% endif %}
+                        >
+                        <span class="radio-dot"></span>
+                        <span>All Categories</span>
+                    </label>
+                </li>
+                {%for cat in categories %}
+                <li>
+                    <label class="radio-row">
+                        <input type="radio" name="category" value="{{ cat.categoryID }}"
+                                {% if request.GET.category == cat.categoryID|stringformat:"s" %}checked
+            {% endif %}>
+                        <span class="radio-dot"></span>
+                        <span>{{ cat.name }}</span>
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>            
+        </div>
+
+        <div class="filter-block" data-filter="price">
+            <div class="filter-header">
+                <h3>Price Range</h3>
+                <button class="collapse-btn" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 12.5L10 7.5L5 12.5" stroke="#1E1E1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="price-range">
+                <div class="range-container">
+                    <div class="range-fill" id="rangeFill"></div>
+                    <input type="range" min="0" max="7000" value="0" step="50" class="range-slider range-min" id="minPrice">
+                    <input type="range" min="0" max="7000" value="4000" step="50" class="range-slider range-max" id="maxPrice">
+                </div>
+                <div class="price-labels">
+                    <span id="minPriceValue">Rs 0</span>
+                    <span id="maxPriceValue">Rs 4000</span>
+                </div>
+                <button class="apply-btn" type="button" id="applyPrice">Apply Filter</button>
+            </div>
+        </div>
+
+        <div class="filter-block" data-filter="color">
+            <div class="filter-header">
+                <h3>Color</h3>
+                <button class="collapse-btn" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 12.5L10 7.5L5 12.5" stroke="#1E1E1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="color-grid">
+                {% for color in colors %}
+                    <button
+                        type="button"
+                        class="swatch"
+                        data-color="{{ color.color }}"
+                        title="{{ color.color }}"
+                        style="background-color: {{ color.colorCode }};">
+                    </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="filter-block" data-filter="size">
+            <div class="filter-header">
+                <h3>Size</h3>
+                <button class="collapse-btn" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 12.5L10 7.5L5 12.5" stroke="#1E1E1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="size-grid">
+                {% for size in sizes %}
+                    <button class="size-btn" data-size="{{ size }}">{{ size }}</button>
+                {% endfor %}
+            </div>
+        </div>
+    </aside>
+
+    {% comment %} Product Grid {% endcomment %}
+    <section class="product-grid" id="productGrid">
+        {% include 'product_grid.html' %}
+    </section>
+</div>
+
+{%endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_list.js' %}"></script>
+{% endblock %}
