@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout | Velora</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fbf8f3;color:#241914;font-family:Arial,sans-serif}header{padding:22px 7%;background:#f4ebdd}.brand{font:34px Georgia,serif;color:#4a3028;text-decoration:none}main{max-width:1050px;margin:38px auto;padding:0 22px}h1,h2{color:#4a3028}h1{font:40px Georgia,serif}.grid{display:grid;grid-template-columns:1.3fr .8fr;gap:24px;align-items:start}.panel{background:white;padding:26px;border:1px solid #eee5da;border-radius:14px}label{display:block;margin:14px 0 6px;font-size:14px}input,textarea,select{width:100%;padding:12px;border:1px solid #d8cec1;border-radius:6px;font:inherit}textarea{min-height:90px;resize:vertical}.method{padding:14px;border:1px solid #e7ded3;border-radius:8px;margin:12px 0}.method input{width:auto}.btn{width:100%;border:0;background:#4a3028;color:white;padding:14px;border-radius:6px;margin-top:18px;cursor:pointer;font-size:15px}.row{display:flex;justify-content:space-between;gap:16px;margin:16px 0}.total{border-top:1px solid #eee;padding-top:18px;font-weight:bold;font-size:19px}.muted{color:#77716b;font-size:13px}.alert{padding:12px;background:#f4ebdd;margin:10px 0;border-radius:6px}
+@media(max-width:750px){.grid{grid-template-columns:1fr}}
+</style></head>
+<body><header><a class="brand" href="/">Velora</a></header><main>
+<p><a href="{% url 'orders_app:cart' %}">← Back to cart</a></p><h1>Complete your order</h1><p class="muted">Enter your contact and delivery details.</p>
+{% for message in messages %}<div class="alert">{{ message }}</div>{% endfor %}
+<div class="grid"><section class="panel"><h2>Delivery details</h2>
+<form method="post" action="{% url 'orders_app:place_order' %}">{% csrf_token %}
+<label for="customer_name">Full name</label><input id="customer_name" name="customer_name" autocomplete="name" required>
+<label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required>
+<label for="phone">Phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel" required>
+<label for="delivery_address">Delivery address</label><textarea id="delivery_address" name="delivery_address" autocomplete="street-address" required></textarea>
+<h2>Payment method</h2>
+<label class="method"><input type="radio" name="payment_method" value="cash" checked> Cash on delivery</label>
+<label class="method"><input type="radio" name="payment_method" value="card"> Card payment (requires payment gateway setup)</label>
+<p class="muted">For your safety, this website does not collect or store card numbers, expiry dates, or CVV. Online card payment must be processed by a payment provider.</p>
+<button class="btn" type="submit">Place order</button></form></section>
+<aside class="panel"><h2>Order summary</h2>
+{% for row in cart_items %}<div class="row"><span>{{ row.product.name }} × {{ row.quantity }}</span><strong>MUR {{ row.line_total|floatformat:2 }}</strong></div>{% endfor %}
+<div class="row"><span>Subtotal</span><span>MUR {{ subtotal|floatformat:2 }}</span></div><div class="row"><span>Delivery</span><span>MUR {{ delivery_fee|floatformat:2 }}</span></div>
+<div class="row total"><span>Total</span><span>MUR {{ total|floatformat:2 }}</span></div></aside></div></main></body></html>

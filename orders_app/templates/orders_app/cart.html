@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Cart | Velora</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fbf8f3;color:#241914;font-family:Inter,Arial,sans-serif}
+header{padding:22px 7%;background:#f4ebdd;display:flex;justify-content:space-between;align-items:center}
+.brand{font:34px Georgia,serif;color:#4a3028;text-decoration:none}header a:last-child{color:#4a3028}
+main{max-width:1100px;margin:42px auto;padding:0 22px}h1{font:40px Georgia,serif;color:#4a3028}
+.layout{display:grid;grid-template-columns:1.6fr .8fr;gap:24px;align-items:start}
+.panel{background:white;border:1px solid #eee5da;border-radius:14px;padding:24px}
+.item{display:grid;grid-template-columns:90px 1fr auto;gap:16px;padding:18px 0;border-bottom:1px solid #eee5da;align-items:center}
+.item img{width:90px;height:100px;object-fit:cover;border-radius:8px}.muted{color:#77716b;font-size:14px}
+button,.btn{border:0;background:#4a3028;color:white;padding:12px 16px;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-block}
+input{padding:8px;border:1px solid #ddd;border-radius:5px;width:65px}.row{display:flex;justify-content:space-between;margin:16px 0}.total{border-top:1px solid #eee;padding-top:16px;font-size:20px;font-weight:bold}
+.alert{padding:10px;background:#f4ebdd;margin:10px 0;border-radius:6px}.remove{background:#fff;color:#8c3d43;border:1px solid #e5cfd0;padding:8px}
+@media(max-width:750px){.layout{grid-template-columns:1fr}.item{grid-template-columns:70px 1fr}.item img{width:70px;height:80px}.item .actions{grid-column:2}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="/">Velora</a><a href="{% url 'products:product_list' %}">Continue shopping</a></header>
+<main>
+<h1>Your shopping bag</h1><p class="muted">Review your items before checkout.</p>
+{% for message in messages %}<div class="alert">{{ message }}</div>{% endfor %}
+<div class="layout">
+<section class="panel">
+<h2>Cart ({{ item_count }} item{{ item_count|pluralize }})</h2>
+{% for row in cart_items %}
+<div class="item">
+{% if row.product.image %}<img src="{{ row.product.image.url }}" alt="{{ row.product.name }}">{% endif %}
+<div><strong>{{ row.product.name }}</strong><p class="muted">MUR {{ row.product.price|floatformat:2 }} each</p>
+<form method="post" action="{% url 'orders_app:update_cart' row.product.productID %}">
+{% csrf_token %}<label class="muted">Qty </label><input type="number" name="quantity" min="0" max="99" value="{{ row.quantity }}"><button type="submit">Update</button>
+</form></div>
+<div class="actions"><strong>MUR {{ row.line_total|floatformat:2 }}</strong>
+<form method="post" action="{% url 'orders_app:remove_from_cart' row.product.productID %}">{% csrf_token %}<button class="remove" type="submit">Remove</button></form></div>
+</div>
+{% empty %}<p>Your cart is empty.</p><a class="btn" href="{% url 'products:product_list' %}">Browse products</a>{% endfor %}
+</section>
+<aside class="panel"><h2>Order summary</h2>
+<div class="row"><span>Subtotal</span><strong>MUR {{ subtotal|floatformat:2 }}</strong></div>
+<div class="row"><span>Delivery</span><strong>{% if item_count %}MUR {{ delivery_fee|floatformat:2 }}{% else %}MUR 0.00{% endif %}</strong></div>
+<div class="row total"><span>Total</span><span>MUR {{ total|floatformat:2 }}</span></div>
+{% if item_count %}<a class="btn" style="display:block;text-align:center" href="{% url 'orders_app:checkout' %}">Proceed to checkout →</a>{% endif %}
+<p class="muted">Prices and totals are calculated by the server.</p></aside>
+</div></main>
+</body></html>
