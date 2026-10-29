@@ -20,12 +20,9 @@
             <a href="{% url 'products:product_detail' product.productID %}" class="btn-viewDetails">
                 View Details
             </a>
-            <form method="post" action="{% url 'orders_app:add_to_cart' product.productID %}">
-                {% csrf_token %}
-                <input type="hidden" name="quantity" value="1">
-                <input type="hidden" name="next" value="{% url 'orders_app:cart' %}">
-                <button class="btn-cart" type="submit">Add to Cart</button>
-            </form>
+            <button class="btn-cart" type="button" data-id="{{product.productID}}">
+                Add to Cart
+            </button>
         </div>
     </div>
 </div>
