@@ -19,7 +19,6 @@ except ImportError:
 def dashboard(request):
     today = timezone.now().date()
 
-    # 1. Stat Cards & Recent Orders (Safeguarded if Order model is None)
     if Order:
         total_revenue = Order.objects.filter(status='Delivered').aggregate(total=Sum('totalPrice'))['total'] or 0
         total_orders = Order.objects.count()

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User
 # Create your views here.
 
@@ -80,3 +80,10 @@ def register(request):
         return redirect('accounts_app:index')
 
     return render(request, 'accounts_app/register.html')
+
+#logout popup
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('accounts_app:login')  # Redirects to login page upon logging out
+    return redirect('admin_app:dashboard')
