@@ -43,6 +43,7 @@ body{
     flex-direction: row;
     align-items: flex-start;
     gap: 24px;
+    margin-bottom: 70px;
 }
 .shop-title{
     color: #4A3028;
@@ -269,8 +270,12 @@ body{
 }
 .swatch:hover{
     transform: scale(1.08);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #8A5E3B;
 }
 .swatch:active{
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #8A5E3B;
+}
+.swatch.active{
     box-shadow: 0 0 0 2px #fff, 0 0 0 4px #8A5E3B;
 }
 

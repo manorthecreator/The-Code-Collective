@@ -4,36 +4,78 @@
 {% block title %}My Wishlist · Velora{% endblock %}
 
 {% block extra_head %}
+
+<link rel="stylesheet" href="{% static 'css/product_list.css' %}">
 <link rel="stylesheet" href="{% static 'store_app/css/wishlist.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_list.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<section class="wishlist-page">
+<section class="wishlist-page" style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
 
-    <header class="wishlist-page-header">
-        <h1>My Wishlist</h1>
-        <p>Your saved pieces of timeless elegance</p>
+    <header class="wishlist-page-header" style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-family: Poppins; font-size: 32px; color: #2F211C;">My Wishlist</h1>
+        <p style="font-family: Poppins; color: #717171;">Your saved pieces of timeless elegance</p>
     </header>
 
+    {% if wishlist_items %}
+        <div class="product-grid" id="wishlistGrid">
+            {% for item in wishlist_items %}
+                <div class="product-card">
+                    
+                    <div class="product-image">
+                        <a href="{% url 'products:product_detail' item.product.productID %}">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                        </a>
+                        
+                        <button class="wishlist-btn active" data-id="{{ item.product.productID }}" data-url="{% url 'products:toggle_wishlist' item.product.productID %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
 
-    <div class="wishlist-page-empty">
+                    <div class="product-info">
+                        <h3 class="product-name">{{ item.product.name }}</h3>
+                        <p class="product-price">Rs {{ item.product.price|floatformat:2 }}</p>
 
-        <div class="wishlist-page-heart">
-            ♡
+                        <div class="product-actions">
+                            <a href="{% url 'products:product_detail' item.product.productID %}" class="btn-viewDetails">
+                                View Details
+                            </a>
+                            <form method="post" action="{% url 'orders_app:add_to_cart' item.product.productID %}" style="flex: 1;">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn-cart" style="width: 100%;">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
 
-        <h2>Your wishlist is empty</h2>
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="{% url 'store_app:home' %}" class="wishlist-page-button" style="background: #A67C52; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-family: Poppins;">
+                Continue Shopping
+            </a>
+        </div>
 
-        <p>
-            Save pieces you love and they'll appear here.
-        </p>
-
-        <a href="{% url 'store_app:home' %}" class="wishlist-page-button">
-            Continue Shopping
-        </a>
-
-    </div>
+    {% else %}
+        <div class="wishlist-page-empty" style="text-align: center; padding: 60px 0;">
+            <div class="wishlist-page-heart" style="font-size: 60px; color: #D8D0C8; margin-bottom: 20px;">
+                ♡
+            </div>
+            <h2 style="font-family: Poppins; color: #2F211C;">Your wishlist is empty</h2>
+            <p style="font-family: Poppins; color: #717171; margin-bottom: 30px;">
+                Save pieces you love and they'll appear here.
+            </p>
+            <a href="{% url 'store_app:home' %}" class="wishlist-page-button" style="background: #A67C52; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-family: Poppins;">
+                Continue Shopping
+            </a>
+        </div>
+    {% endif %}
 
 </section>
 

@@ -3,7 +3,11 @@
 
     <div class="product-image">
         <img src="{{product.image.url}}" alt="{{product.name}}">
-        <button class="wishlist-btn" type="button" data-id="{{product.productID}}" aria-label="Add to wishlist">
+        <button class="wishlist-btn {% if product.productID in user_wishlist %}active{% endif %}" 
+                type="button" 
+                data-id="{{product.productID}}" 
+                data-url="{% url 'products:toggle_wishlist' product.productID %}"
+                aria-label="Add to wishlist">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                 fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -20,9 +24,13 @@
             <a href="{% url 'products:product_detail' product.productID %}" class="btn-viewDetails">
                 View Details
             </a>
-            <button class="btn-cart" type="button" data-id="{{product.productID}}">
-                Add to Cart
-            </button>
+            <form method="post" action="{% url 'orders_app:add_to_cart' product.productID %}" style="flex: 1;">
+                {% csrf_token %}
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn-cart" style="width: 100%;">
+                    Add to Cart
+                </button>
+            </form>
         </div>
     </div>
 </div>

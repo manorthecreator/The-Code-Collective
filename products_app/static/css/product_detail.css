@@ -269,6 +269,20 @@ input[type="number"]::-webkit-inner-spin-button {
     background: #2F211C;
     color: #FFF;
 }
+.wishlist-toggle-btn{
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.wishlist-btn-detail.active svg,
+.wishlist-toggle-btn.active svg {
+    fill: #000000;
+    stroke: #000000;
+}
 
 .trust-badges {
     display: flex;
