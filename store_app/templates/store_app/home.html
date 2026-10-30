@@ -37,7 +37,7 @@
 
             <div class="hero-buttons">
 
-                <a href="#" class="btn btn-primary">
+                <a href="{% url 'products:product_list' %}" class="btn btn-primary">
                     Shop Now
                 </a>
 
@@ -156,7 +156,7 @@
 
                 <h3>WOMEN</h3>
 
-                <a href="#" class="category-button">
+                <a href="{% url 'products:product_list' %}?category=2" class="category-button">
                     Shop Now
                 </a>
 
@@ -180,7 +180,7 @@
 
                 <h3>MEN</h3>
 
-                <a href="#" class="category-button">
+                <a href="{% url 'products:product_list' %}?category=1" class="category-button">
                     Shop Now
                 </a>
 
@@ -204,7 +204,7 @@
 
                 <h3>ACCESSORIES</h3>
 
-                <a href="#" class="category-button">
+                <a href="{% url 'products:product_list' %}?category=3" class="category-button">
                     Shop Now
                 </a>
 
