@@ -196,3 +196,62 @@
     line-height: 1.5;
     font-weight: 500;
 }
+
+.logout-button {
+    display: block;
+    margin: 20px auto 40px;
+    padding: 12px 35px;
+    background-color: #4A3028;
+    color: #F4EBDD;
+    border: 1px solid #4A3028;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #F4EBDD;
+    color: #4A3028;
+}
+
+.account-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.account-sidebar form {
+    width: 100%;
+    margin: 0;
+}
+
+.sidebar-link {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 18px;
+    text-align: left;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: #4A3028;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sidebar-link.active {
+    background-color: #4A3028;
+    color: #F4EBDD;
+}
+
+.logout-link {
+    width: 100%;
+    display: block;
+}
+
+.logout-link:hover {
+    background-color: #F4EBDD;
+}
