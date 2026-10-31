@@ -1,8 +1,17 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from products_app.models import Product
 
 def home(request):
-    return render(request, "store_app/home.html")
+    new_arrivals = Product.objects.filter(
+        status='Available'
+    ).order_by('-productID')[:4]
+
+    context = {
+        'new_arrivals': new_arrivals,
+    }
+
+    return render(request, 'store_app/home.html', context)
 
 
 def about(request):
