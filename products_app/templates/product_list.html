@@ -100,7 +100,7 @@
                         class="swatch"
                         data-color="{{ color.color }}"
                         title="{{ color.color }}"
-                        style="background-color: {{ color.colorCode }};">
+                        style="background-color: {{ color.colorCode|default:'#ffffff' }};">
                     </button>
                 {% endfor %}
             </div>
