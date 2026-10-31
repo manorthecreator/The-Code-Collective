@@ -43,7 +43,11 @@
 
                 <div class="nav-icons">
 
-                    <a href="#" aria-label="Account">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'accounts_app:account' %}" aria-label="Account">
+                    {% else %}
+                        <a href="{% url 'accounts_app:register' %}" aria-label="Account">
+                    {% endif %}
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
                             <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -91,7 +95,7 @@
         <div class="footer-rule"></div>
 
         <div class="footer-links">
-            <a href="#">Shop</a>
+            <a href="{% url 'products:product_list' %}">Shop</a>
             <span class="dot">•</span>
             <a href="{% url 'store_app:about' %}">About us</a>
             <span class="dot">•</span>
