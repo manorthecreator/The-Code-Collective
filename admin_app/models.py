@@ -18,3 +18,8 @@ class StoreSetting(models.Model):
 
     def __str__(self):
         return self.store_name
+
+    @classmethod
+    def get_solo(cls):  #what for?
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
