@@ -1,4 +1,20 @@
 $(function(){
+    // CSRF Token setup required for AJAX POST
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
 
     // Vertical Thumbnails
     $('.product-thumbnails').slick({
@@ -112,6 +128,42 @@ $(function(){
                 $btn.prop('disabled', false).text('Submit Review');
                 console.log(xhr.responseText);
                 alert('There was an error submitting. Check the console.');
+            }
+        });
+    });
+
+    //Wishlist
+    $(document).on('click', '.wishlist-btn-detail, .wishlist-toggle-btn', function (e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var url = $btn.data('url'); 
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { 'csrfmiddlewaretoken': csrftoken },
+            success: function (response) {
+                var $imageHeart = $('.wishlist-btn-detail');
+                var $bottomBtn = $('.wishlist-toggle-btn');
+                var $btnText = $bottomBtn.find('.wishlist-btn-text');
+
+                if (response.added) {
+                    $imageHeart.addClass('active');
+                    $bottomBtn.addClass('active');
+                    $btnText.text('Remove from Wishlist');
+                } else {
+                    $imageHeart.removeClass('active');
+                    $bottomBtn.removeClass('active');
+                    $btnText.text('Add to Wishlist');
+                }
+            },
+            error: function (xhr) {
+                if (xhr.status === 403) {
+                    window.location.href = "/accounts_app/login/?next=" + window.location.pathname;
+                } else {
+                    console.log("Wishlist error:", xhr.responseText);
+                    alert("Something went wrong. Please try again.");
+                }
             }
         });
     });

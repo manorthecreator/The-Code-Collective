@@ -1,6 +1,24 @@
 $(function () {
     console.log("✅ product_list.js loaded. jQuery version:", $.fn.jquery);
 
+    //CSRF Token Setup which is REQUIRED for wishlist POST
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+
     // Collapse Filter Block
     $('.collapse-btn').on('click',function(){
         const $block=$(this).closest('.filter-block');
@@ -51,25 +69,25 @@ $(function () {
 
 
     //    ---------- Color swatches (multi-select) ---------- 
-    $('.swatch').on('click', function () {
+    $(document).on('click', '.swatch', function () {
         $(this).toggleClass('active');
         applyFilters();
     });
 
     //    ---------- Size buttons (single-select) ---------- 
-    $('.size-btn').on('click', function () {
+    $(document).on('click', '.size-btn', function () {
         $(this).siblings().removeClass('active');
         $(this).toggleClass('active');
         applyFilters();
     });
 
     //    ---------- Category change (submit immediately) ---------- 
-    $('input[name="category"]').on('change', function () {
+    $(document).on('change', 'input[name="category"]', function () {
         applyFilters();
     });
 
     //    ---------- Apply price button (submit) ---------- 
-    $('#applyPrice').on('click', function () {
+    $(document).on('click', '#applyPrice', function () {
         applyFilters();
     });
 
@@ -102,7 +120,43 @@ $(function () {
     return params;
   }
 
-
+  //Wishlist Heart
+  $(document).on('click', '.wishlist-btn', function (e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var url = $btn.data('url'); 
+        if (!url) {
+            console.error("No data-url attribute found on the button.");
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: { 'csrfmiddlewaretoken': csrftoken },
+            success: function (response) {
+                if (response.added) {
+                    $btn.addClass('active');
+                } else {
+                    $btn.removeClass('active');
+                    if ($('#wishlistGrid').length > 0) {
+                        $btn.closest('.product-card').fadeOut(300, function() {
+                            $(this).remove();
+                            if ($('#wishlistGrid').children().length === 0) {
+                                location.reload();
+                            }
+                        });
+                    }
+                }
+            },
+            error: function (xhr) {
+                if (xhr.status === 403) {
+                    window.location.href = "/accounts_app/login/?next=" + window.location.pathname;
+                } else {
+                    console.log("Wishlist error:", xhr.responseText);
+                }
+            }
+        });
+    });
 
 
 //   -----------------------AJAX Part------------------------------------------
